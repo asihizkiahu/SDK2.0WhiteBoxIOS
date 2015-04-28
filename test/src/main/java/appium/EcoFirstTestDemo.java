@@ -46,7 +46,7 @@ public class EcoFirstTestDemo extends BaseTest {
         infoActivator.setSkill("aaaa", "mobile");
 //        verify call in agent service
         demoActivator.enterChat();
-        chatActivator.sendChatMsg("This is a test message");
+        chatActivator.sendChatMsg("This is a test message");  
         chatActivator.ensSession();
 
         infoActivator.setSkill("bbb", "sales");
