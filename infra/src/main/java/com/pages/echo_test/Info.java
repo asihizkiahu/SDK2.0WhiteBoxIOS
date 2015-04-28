@@ -12,11 +12,11 @@ import org.openqa.selenium.WebElement;
 public class Info extends AppiumBasePage {
 
 
-    private final By SET_ACCOUNT_SKILL = By.id(AppConstants.APP_ID_PREFIX + "setAccountSkillButton");
-    private final By ACCOUNT_NAME = By.id(AppConstants.APP_ID_PREFIX + "mixAccountEditText");
-    private final By SKILL = By.id(AppConstants.APP_ID_PREFIX + "mixSkillEditText");
-    private final By SET = By.id(AppConstants.APP_ID_PREFIX + "setCurrentButton");
-    private final By ACC_SKILL_STATUS = By.id(AppConstants.APP_ID_PREFIX + "currentValTextView");
+    private final By SET_ACCOUNT_SKILL = By.id(InfraConstants.APP_ID_PREFIX + "setAccountSkillButton");
+    private final By ACCOUNT_NAME = By.id(InfraConstants.APP_ID_PREFIX + "mixAccountEditText");
+    private final By SKILL = By.id(InfraConstants.APP_ID_PREFIX + "mixSkillEditText");
+    private final By SET = By.id(InfraConstants.APP_ID_PREFIX + "setCurrentButton");
+    private final By ACC_SKILL_STATUS = By.id(InfraConstants.APP_ID_PREFIX + "currentValTextView");
 
     private Info.Activate activate = this.new Activate();
     private Info.Validate validate = this.new Validate();

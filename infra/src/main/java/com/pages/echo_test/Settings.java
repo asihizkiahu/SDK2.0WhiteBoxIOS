@@ -11,9 +11,9 @@ import org.openqa.selenium.WebElement;
 public class Settings extends AppiumBasePage{
 
 
-    private final By ACCOUNT_ID = By.id(AppConstants.APP_ID_PREFIX + "settings_app_id");
-    private final By STAGING = By.id(AppConstants.APP_ID_PREFIX + "settings_staging");
-    private final By SAVE_AND_CLOSE = By.id(AppConstants.APP_ID_PREFIX + "settings_save_and_close");
+    private final By ACCOUNT_ID = By.id(InfraConstants.APP_ID_PREFIX + "settings_app_id");
+    private final By STAGING = By.id(InfraConstants.APP_ID_PREFIX + "settings_staging");
+    private final By SAVE_AND_CLOSE = By.id(InfraConstants.APP_ID_PREFIX + "settings_save_and_close");
 
     private WebElement accountId;
     private WebElement staging;

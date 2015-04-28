@@ -1,8 +1,13 @@
 package com.service.activate.echo_test;
 
 import com.pages.echo_test.Chat;
+import com.pages.echo_test.InfraConstants;
+import com.pages.echo_test.Menu;
+import com.service.ReflectivePageFlow;
 import com.util.genutil.GeneralUtils;
 import org.apache.log4j.Logger;
+
+import java.util.Arrays;
 
 /**
  * Created by asih on 09/03/2015.
@@ -40,7 +45,7 @@ public class ChatActivator {
                 return;
             }
         }
-        chatPage.prepareElements();
+        ReflectivePageFlow.invoke(Chat.class, chatPage, Arrays.asList(InfraConstants.PREPARE_ELEMENTS_M_NAME));
         chatPage.getActivate().sendMsg(msg);
     }
 
