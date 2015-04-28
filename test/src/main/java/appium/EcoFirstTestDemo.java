@@ -1,22 +1,16 @@
 package appium;
 
 import com.config.base.ConfigItemsRouter;
-import com.pages.demo_app.ChooseChatType;
-import com.pages.demo_app.ChooseCustomerType;
 import com.service.activate.demo_app.DemoActivator;
 import com.service.activate.echo_test.ChatActivator;
 import com.service.activate.echo_test.InfoActivator;
 import com.service.activate.echo_test.SettingsActivator;
 import com.service.validate.echo_test.ChatValidator;
 import com.ui.service.drivers.AppiumDrivers;
-import org.apache.log4j.Logger;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.ScreenOrientation;
-import org.openqa.selenium.WebElement;
 
 /**
  * Created by asih on 18/03/2015.
@@ -46,12 +40,11 @@ public class EcoFirstTestDemo extends BaseTest {
         infoActivator.setSkill("aaaa", "mobile");
 //        verify call in agent service
         demoActivator.enterChat();
-        chatActivator.sendChatMsg("This is a test message");  
+        chatActivator.sendChatMsg("This is a test message");
         chatActivator.ensSession();
 
-        infoActivator.setSkill("bbb", "sales");
-        demoActivator.enterChat();
-        chatValidator.validateNotInChat();
+        infoActivator.setSkill("Asi Hiz", "tech support");
+        chatValidator.verifySkillRemainLegual(SITE_ID + "\\mobile");
         // verify no call in agent service
 
     }

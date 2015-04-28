@@ -2,6 +2,7 @@ package com.pages.echo_test;
 
 import com.ui.page.AppiumBasePage;
 import com.ui.page.base.NotInPageException;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -15,10 +16,12 @@ public class Info extends AppiumBasePage {
     private final By ACCOUNT_NAME = By.id(AppConstants.APP_ID_PREFIX + "mixAccountEditText");
     private final By SKILL = By.id(AppConstants.APP_ID_PREFIX + "mixSkillEditText");
     private final By SET = By.id(AppConstants.APP_ID_PREFIX + "setCurrentButton");
+    private final By ACC_SKILL_STATUS = By.id(AppConstants.APP_ID_PREFIX + "currentValTextView");
 
     private Info.Activate activate = this.new Activate();
     private Info.Validate validate = this.new Validate();
 
+    private WebElement skill;
 
     public Info(boolean shouldValidateOnPage, boolean shouldFailTestOnLocation){
         super(shouldValidateOnPage, shouldFailTestOnLocation);
@@ -40,6 +43,10 @@ public class Info extends AppiumBasePage {
     }
 
     public class Validate {
+        public void verifySkillRemainLegual(String _skill) throws Exception {
+            Assert.assertEquals("Skill changed when not expected", _skill,
+                    service.findElement(ACC_SKILL_STATUS, className + "=setAccountSkill").getText());;
+        }
     }
 
     @Override

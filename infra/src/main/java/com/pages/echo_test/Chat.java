@@ -2,6 +2,7 @@ package com.pages.echo_test;
 
 import com.ui.page.AppiumBasePage;
 import com.ui.page.base.NotInPageException;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
