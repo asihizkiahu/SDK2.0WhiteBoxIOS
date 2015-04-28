@@ -1,0 +1,88 @@
+<le_config_data>
+  <site>
+    <create_site>
+      <siteId>6468850</siteId>
+      <isExtentExpiration>true</isExtentExpiration>
+      <creationType>CreateNew</creationType>
+    </create_site>
+    <!--1 or more repetitions:-->
+    <users_data>
+      <create_user>
+        <userType>Administrator</userType>
+        <user>admin</user>
+        <password>12345678</password>
+        <email>aconboarding@gmail.com</email>
+        <!--1 or more repetitions:-->
+      </create_user>
+      <modify_user>
+        <siteId>string</siteId>
+      </modify_user>
+      <delete_user>
+        <siteId>string</siteId>
+        <deleteSkillData>string</deleteSkillData>
+        <deleteUserData>string</deleteUserData>
+      </delete_user>
+    </users_data>
+    <users_data>
+      <create_user>
+        <userType>Agent</userType>
+        <user>agent1</user>
+        <password>12345678</password>
+        <email>asih@liveperson.com</email>
+        <!--1 or more repetitions:-->
+        <skill>mobile</skill>
+        <skill>tectSupport</skill>
+      </create_user>
+      <modify_user>
+        <siteId>string</siteId>
+      </modify_user>
+      <delete_user>
+        <siteId>string</siteId>
+        <deleteSkillData>string</deleteSkillData>
+        <deleteUserData>string</deleteUserData>
+      </delete_user>
+    </users_data>
+    <users_data>
+      <create_user>
+        <userType>Agent</userType>
+        <user>agent2</user>
+        <password>12345678</password>
+        <email>asihhh@liveperson.com</email>
+        <!--1 or more repetitions:-->
+    <skill>sales</skill>
+  </create_user>
+  <modify_user>
+    <siteId>string</siteId>
+  </modify_user>
+  <delete_user>
+    <siteId>string</siteId>
+    <deleteSkillData>string</deleteSkillData>
+    <deleteUserData>string</deleteUserData>
+  </delete_user>
+</users_data>
+<!--1 or more repetitions:-->
+    <visitors_data>
+      <create_visitors>
+        <siteId>string</siteId>
+      </create_visitors>
+      <modify_visitors>
+        <siteId>string</siteId>
+      </modify_visitors>
+      <delete_visitors>
+        <siteId>string</siteId>
+      </delete_visitors>
+    </visitors_data>
+    <!--1 or more repetitions:-->
+    <campaign_data>
+      <create_campaign>
+        <siteId>string</siteId>
+      </create_campaign>
+      <modify_campaign>
+        <siteId>string</siteId>
+      </modify_campaign>
+      <delete_campaign>
+        <siteId>string</siteId>
+      </delete_campaign>
+    </campaign_data>
+  </site>
+</le_config_data>

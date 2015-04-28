@@ -1,0 +1,68 @@
+<le_config_data>
+  <site>
+    <create_site>
+      <siteId>Lm987h</siteId>
+      <siteUrl>http://site.lp.com</siteUrl>
+    </create_site>
+    <!--<modify_site>-->
+      <!--<siteId>string</siteId>-->
+      <!--<siteUrl>string</siteUrl>-->
+    <!--</modify_site>-->
+    <!--<delete_site>-->
+      <!--<siteId>string</siteId>-->
+      <!--<siteUrl>string</siteUrl>-->
+    <!--</delete_site>-->
+    <!--1 or more repetitions:-->
+    <users_data>
+      <create_user>
+        <siteId>Lm987h</siteId>
+        <!--1 or more repetitions:-->
+        <skill>Manager</skill>
+        <skill>Sales</skill>
+      </create_user>
+      <modify_user>
+        <siteId>string</siteId>
+      </modify_user>
+      <delete_user>
+        <siteId>string</siteId>
+      </delete_user>
+    </users_data>
+    <!--1 or more repetitions:-->
+    <visitors_data>
+      <create_visitors>
+        <siteId>Lm987h</siteId>
+      </create_visitors>
+      <modify_visitors>
+        <siteId>string</siteId>
+      </modify_visitors>
+      <delete_visitors>
+        <siteId>string</siteId>
+      </delete_visitors>
+    </visitors_data>
+
+    <visitors_data>
+      <create_visitors>
+        <siteId>Lm987h</siteId>
+      </create_visitors>
+      <modify_visitors>
+        <siteId>string</siteId>
+      </modify_visitors>
+      <delete_visitors>
+        <siteId>string</siteId>
+      </delete_visitors>
+    </visitors_data>
+
+    <!--1 or more repetitions:-->
+    <campaign_data>
+      <create_campaign>
+        <siteId>string</siteId>
+      </create_campaign>
+      <modify_campaign>
+        <siteId>string</siteId>
+      </modify_campaign>
+      <delete_campaign>
+        <siteId>string</siteId>
+      </delete_campaign>
+    </campaign_data>
+  </site>
+</le_config_data>

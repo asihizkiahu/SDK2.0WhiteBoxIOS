@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>Sdk2WhiteBoxAndroid</artifactId>
+        <groupId>com.liveperson.automation.mobile</groupId>
+        <version>1.0.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>infra</artifactId>
+
+
+    <dependencies>
+
+        <!--<dependency>-->
+            <!--<groupId>com.liveperson.automation.mobile</groupId>-->
+            <!--<artifactId>automationCommon</artifactId>-->
+            <!--<version>1.0.0.0-SNAPSHOT</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>com.liveperson.automation.mobile</groupId>-->
+            <!--<artifactId>automationCommon</artifactId>-->
+            <!--<version>1.0.0.0-SNAPSHOT</version>-->
+            <!--<scope>system</scope>-->
+            <!--<systemPath>C:/Users/asih/IdeaProjects/AutomationCommon/target/automationCommon-1.0.0.0-SNAPSHOT.jar</systemPath>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>com.liveperson.provisioning</groupId>-->
+            <!--<artifactId>provision-tool</artifactId>-->
+            <!--<version>0.0.3</version>-->
+        <!--</dependency>-->
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+        </dependency>
+
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>2.42.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>sun-jaxb</groupId>
+            <artifactId>jaxb-api</artifactId>
+            <version>2.1.9</version>
+        </dependency>
+
+
+
+
+    </dependencies>
+
+
+</project>
