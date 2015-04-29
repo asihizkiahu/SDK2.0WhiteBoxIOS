@@ -4,6 +4,21 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+
+
+    <!--C:\Users\asih\.m2\repository\com\liveperson\automation\mobile\automationCommon\1.0.0.0-SNAPSHOT-->
+
+
+
+
+
+    <repositories>
+        <repository>
+            <id>my-local-repo</id>
+            <url>file://${settings.localRepository}/</url>
+        </repository>
+    </repositories>
+
     <parent>
         <groupId>com.liveperson.maven</groupId>
         <artifactId>liveperson-parent</artifactId>
@@ -41,8 +56,8 @@
             <groupId>com.liveperson.automation.mobile</groupId>
             <artifactId>automationCommon</artifactId>
             <version>1.0.0.0-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>C:/Users/asih/.m2/repository/com/liveperson/automation/mobile/automationCommon/1.0.0.0-SNAPSHOT/automationCommon-1.0.0.0-SNAPSHOT.jar</systemPath>
+            <!--<scope>system</scope>-->
+            <!--<systemPath>${settings.localRepository}/com/liveperson/automation/mobile/automationCommon/1.0.0.0-SNAPSHOT/automationCommon-1.0.0.0-SNAPSHOT.jar</systemPath>-->
         </dependency>
 
         <dependency>
