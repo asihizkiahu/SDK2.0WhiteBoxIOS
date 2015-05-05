@@ -1,4 +1,5 @@
 appium\BaseTest.class
-appium\FirstTestDemo.class
+appium\EcoSanityTest.class
 appium\BaseTest$DriverType.class
 appium\AppiumTest.class
+appium\SanityTest.class
