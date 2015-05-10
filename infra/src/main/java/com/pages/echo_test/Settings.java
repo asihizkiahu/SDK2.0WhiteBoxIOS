@@ -36,6 +36,7 @@ public class Settings extends AppiumBasePage{
 
     public class Activate {
         public void feedAccountDetails(String _accountId) throws Exception{
+            accountId.clear();
             accountId.sendKeys(_accountId);
             staging.click();
             saveAndClose.click();

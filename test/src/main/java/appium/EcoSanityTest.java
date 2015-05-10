@@ -36,7 +36,8 @@ public class EcoSanityTest extends BaseTest {
     private static List<Rep> repsState = new ArrayList<Rep>();
     private static List<AgentState> agentStates = new ArrayList<AgentState>();
     static AgentService service = AgentService.getInstance();
-
+    private final String visitorMsg = "I need help";
+    private final String agentMsg = "Me too";
 
     @Before
     public void setUp() throws Exception {
@@ -66,8 +67,9 @@ public class EcoSanityTest extends BaseTest {
         demoActivator.enterChat();
         prepareAgentForChat();
 
-        chatActivator.sendChatMsg("This is a test message");
+        chatActivator.sendChatMsg(visitorMsg);
         activateAgent();
+
         chatActivator.ensSession();
         service.endChat(agents.get(1));
 
@@ -84,9 +86,9 @@ public class EcoSanityTest extends BaseTest {
     private void activateAgent(){
         if(service.isRingingCountAsExpected(agents.get(1), 1, 5000)){
             service.startChat(agents.get(1));
-            if(service.verifyLatestChatLines(agents.get(1), "aaaa")) {
-                service.addChatLines(agents.get(1), "bbbb");
-                service.endChat(agents.get(1));
+            if(service.verifyLatestChatLines(agents.get(1), visitorMsg)) {
+                service.addChatLines(agents.get(1), agentMsg);
+                service.verifyLatestChatLines(agents.get(1), agentMsg);
             }
         }
 

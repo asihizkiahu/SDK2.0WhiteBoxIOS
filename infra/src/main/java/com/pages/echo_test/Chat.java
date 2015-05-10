@@ -40,6 +40,7 @@ public class Chat extends AppiumBasePage {
         public void sendMsg(String _msg) {
             msg.sendKeys(_msg);
             send.click();
+            service.implicitWait(1500);
         }
 
         public void ensSession() {
