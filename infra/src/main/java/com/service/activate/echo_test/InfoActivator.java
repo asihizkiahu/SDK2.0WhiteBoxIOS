@@ -29,13 +29,19 @@ public class InfoActivator {
     }
 
     public void setSkill(String accountName, String skill) throws Exception {
-        ReflectivePageFlow.invoke(Menu.class, menu, Arrays.asList(InfraConstants.VALIDATE_IN_PAGE_M_NAME, InfraConstants.PREPARE_ELEMENTS_M_NAME));
+        ReflectivePageFlow.invoke(Menu.class, menu, Arrays.asList(
+                InfraConstants.VALIDATE_IN_PAGE_M_NAME,
+                InfraConstants.PREPARE_ELEMENTS_M_NAME)
+        );
         menu.getActivate().enterMenuInfo();
         feedAccountInfo(accountName, skill);
     }
 
     public void feedAccountInfo(String accountName, String skill) throws Exception {
-        ReflectivePageFlow.invoke(Info.class, info, Arrays.asList(InfraConstants.VALIDATE_IN_PAGE_M_NAME, InfraConstants.PREPARE_ELEMENTS_M_NAME));
+        ReflectivePageFlow.invoke(Info.class, info, Arrays.asList(
+                InfraConstants.VALIDATE_IN_PAGE_M_NAME,
+                InfraConstants.PREPARE_ELEMENTS_M_NAME)
+        );
         info.getActivate().feedAccountDetails(accountName, skill);
     }
 

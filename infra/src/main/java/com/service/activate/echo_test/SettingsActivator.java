@@ -32,13 +32,19 @@ public class SettingsActivator {
     }
 
     public void connectToAccount(String accountId) throws Exception {
-        ReflectivePageFlow.invoke(Menu.class, menu, Arrays.asList(InfraConstants.VALIDATE_IN_PAGE_M_NAME, InfraConstants.PREPARE_ELEMENTS_M_NAME));
+        ReflectivePageFlow.invoke(Menu.class, menu, Arrays.asList(
+                InfraConstants.VALIDATE_IN_PAGE_M_NAME,
+                InfraConstants.PREPARE_ELEMENTS_M_NAME)
+        );
         menu.getActivate().enterMenuSettings();
         feedAccountInfo(accountId);
     }
 
     public void feedAccountInfo(String accountId) throws Exception {
-        ReflectivePageFlow.invoke(Settings.class, settings, Arrays.asList(InfraConstants.VALIDATE_IN_PAGE_M_NAME, InfraConstants.PREPARE_ELEMENTS_M_NAME));
+        ReflectivePageFlow.invoke(Settings.class, settings, Arrays.asList(
+                InfraConstants.VALIDATE_IN_PAGE_M_NAME,
+                InfraConstants.PREPARE_ELEMENTS_M_NAME)
+        );
         settings.getActivate().feedAccountDetails(accountId);
     }
 
