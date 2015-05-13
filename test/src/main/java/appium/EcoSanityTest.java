@@ -24,18 +24,18 @@ import static com.liveperson.AgentState.Online;
  */
 public class EcoSanityTest extends BaseTest {
 
-    static AppiumService appiumService = AppiumService.getInstance();
-    private static final String TEST_DIR = "./src/main/resources/eco_sanity_test/";
-    private static final String SITE_ID = "89961346";
+    private AppiumService appiumService = AppiumService.getInstance();
+    private final String TEST_DIR = "./src/main/resources/eco_sanity_test/";
+    private final String SITE_ID = "89961346";
     private SettingsActivator settingsActivator = SettingsActivator.getInstance();
     private InfoActivator infoActivator = InfoActivator.getInstance();
     private ChatActivator chatActivator = ChatActivator.getInstance();
     private DemoActivator demoActivator = DemoActivator.getInstance();
     private ChatValidator chatValidator = ChatValidator.getInstance();
-    private static List<Rep> agents = new ArrayList<Rep>();
-    private static List<Rep> repsState = new ArrayList<Rep>();
-    private static List<AgentState> agentStates = new ArrayList<AgentState>();
-    static AgentService service = AgentService.getInstance();
+    private List<Rep> agents = new ArrayList<Rep>();
+    private List<Rep> repsState = new ArrayList<Rep>();
+    private List<AgentState> agentStates = new ArrayList<AgentState>();
+    private AgentService service = AgentService.getInstance();
     private final String visitorMsg = "I need help";
     private final String agentMsg = "Me too";
 
@@ -83,8 +83,8 @@ public class EcoSanityTest extends BaseTest {
     }
 
     private void activateAgentConversation(){
-
         Rep mobileAgent = service.getFirstMobileAgent();
+
         Assert.assertNotNull("There is no mobile agent", mobileAgent);
         Assert.assertTrue(
                 "Ringing count is not as expected",
@@ -104,11 +104,11 @@ public class EcoSanityTest extends BaseTest {
         );
 
         service.addChatLines(agents.get(1), agentMsg);
+
         Assert.assertTrue(
                 "Chat last line " + agentMsg + "is not as expected ",
                 service.verifyLatestChatLines(agents.get(1), agentMsg)
         );
-
     }
 
     @After
@@ -117,8 +117,8 @@ public class EcoSanityTest extends BaseTest {
         service.tearDown(agents);
     }
 
-    @AfterClass
-    public static void after() throws Exception {
+//    @AfterClass
+//    public static void after() throws Exception {
 //        BaseTest.after(DriverType.APPIUM);
-    }
+//    }
 }
