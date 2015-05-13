@@ -20,6 +20,7 @@ import static com.liveperson.AgentState.Online;
 
 /**
  * Created by asih on 18/03/2015.
+ *
  */
 public class EcoSanityTest extends BaseTest {
 
@@ -39,19 +40,18 @@ public class EcoSanityTest extends BaseTest {
     private final String agentMsg = "Me too";
 
 
-
     @Before
     public void setUp() throws Exception {
         super.setUp(AppiumDrivers.ANDROID, ConfigItemsRouter.ConfigType.LECreate, TEST_DIR);
         initAgentService();
     }
 
-    private static void initAgentService(){
+    private void initAgentService(){
         service.setup(TEST_DIR, agents);
         initLoginState();
     }
 
-    private static void initLoginState(){
+    private void initLoginState(){
         repsState.add(agents.get(0));
         repsState.add(agents.get(1));
         agentStates.add(Online);
@@ -63,10 +63,9 @@ public class EcoSanityTest extends BaseTest {
 
         settingsActivator.connectToAccount(SITE_ID);
         infoActivator.setSkill("aaaa", "mobile");
-//        verify call in agent service
 
-        demoActivator.enterChat();
         prepareAgentForChat();
+        demoActivator.enterChat();
 
         chatActivator.sendChatMsg(visitorMsg);
         activateAgentConversation();
@@ -76,7 +75,6 @@ public class EcoSanityTest extends BaseTest {
 
         infoActivator.setSkill("Asi Hiz", "tech support");
         chatValidator.verifySkillRemainLegual(SITE_ID + "\\mobile");
-        // verify no call in agent service
 
     }
 
@@ -85,28 +83,32 @@ public class EcoSanityTest extends BaseTest {
     }
 
     private void activateAgentConversation(){
-        Assert.assertTrue("Ringing count is not as expected",
-                service.isRingingCountAsExpected(agents.get(1), 1, 5000)
+
+        Rep mobileAgent = service.getFirstMobileAgent();
+        Assert.assertNotNull("There is no mobile agent", mobileAgent);
+        Assert.assertTrue(
+                "Ringing count is not as expected",
+                service.isRingingCountAsExpected(mobileAgent, 1, 5000)
         );
-        if(service.isRingingCountAsExpected(agents.get(1), 1, 5000)){
-            Assert.assertTrue(
-                    "Chat last line " + visitorMsg + "is not as expected", service.startChat(agents.get(1))
-            );
-            appiumService.implicitWait(3000);
-            if(service.verifyLatestChatLines(agents.get(1), visitorMsg)) {
-                service.addChatLines(agents.get(1), agentMsg);
-                Assert.assertTrue(
-                        "Chat last line " + agentMsg + "is not as expected ",
-                        service.verifyLatestChatLines(
-                                agents.get(1),
-                                agentMsg)
-                );
-            } else {
-                Assert.assertTrue(
-                        "Chat last line " + visitorMsg + "is not as expected", false
-                );
-            }
-        }
+
+        Assert.assertTrue(
+                "Start chat encountered a problem",
+                service.startChat(mobileAgent)
+        );
+
+        appiumService.implicitWait(3000);
+
+        Assert.assertTrue(
+                "Chat last line " + visitorMsg + "is not as expected",
+                service.verifyLatestChatLines(mobileAgent, visitorMsg)
+        );
+
+        service.addChatLines(agents.get(1), agentMsg);
+        Assert.assertTrue(
+                "Chat last line " + agentMsg + "is not as expected ",
+                service.verifyLatestChatLines(agents.get(1), agentMsg)
+        );
+
     }
 
     @After

@@ -7,7 +7,7 @@
     </create_site>
     <!--1 or more repetitions:-->
     <users_data>
-      <create_user>
+      <create_user>.
         <userType>Administrator</userType>
         <user>asih@liveperson.com</user>
         <password>Carish74</password>
