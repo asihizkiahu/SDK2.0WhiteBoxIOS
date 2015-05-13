@@ -9,11 +9,9 @@ import com.service.activate.echo_test.ChatActivator;
 import com.service.activate.echo_test.InfoActivator;
 import com.service.activate.echo_test.SettingsActivator;
 import com.service.validate.echo_test.ChatValidator;
+import com.ui.service.AppiumService;
 import com.ui.service.drivers.AppiumDrivers;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +23,7 @@ import static com.liveperson.AgentState.Online;
  */
 public class EcoSanityTest extends BaseTest {
 
+    static AppiumService appiumService = AppiumService.getInstance();
     private static final String TEST_DIR = "./src/main/resources/eco_sanity_test/";
     private static final String SITE_ID = "89961346";
     private SettingsActivator settingsActivator = SettingsActivator.getInstance();
@@ -38,6 +37,8 @@ public class EcoSanityTest extends BaseTest {
     static AgentService service = AgentService.getInstance();
     private final String visitorMsg = "I need help";
     private final String agentMsg = "Me too";
+
+
 
     @Before
     public void setUp() throws Exception {
@@ -68,7 +69,7 @@ public class EcoSanityTest extends BaseTest {
         prepareAgentForChat();
 
         chatActivator.sendChatMsg(visitorMsg);
-        activateAgent();
+        activateAgentConversation();
 
         chatActivator.ensSession();
         service.endChat(agents.get(1));
@@ -83,12 +84,25 @@ public class EcoSanityTest extends BaseTest {
         service.logInAndSetState(repsState, agentStates);
     }
 
-    private void activateAgent(){
+    private void activateAgentConversation(){
+        Assert.assertTrue("Ringing count is not as expected",
+                service.isRingingCountAsExpected(agents.get(1), 1, 5000)
+        );
         if(service.isRingingCountAsExpected(agents.get(1), 1, 5000)){
             service.startChat(agents.get(1));
+            appiumService.implicitWait(3000);
             if(service.verifyLatestChatLines(agents.get(1), visitorMsg)) {
                 service.addChatLines(agents.get(1), agentMsg);
-                service.verifyLatestChatLines(agents.get(1), agentMsg);
+                Assert.assertTrue(
+                        "Chat last line " + agentMsg + "is not as expected ",
+                        service.verifyLatestChatLines(
+                                agents.get(1),
+                                agentMsg)
+                );
+            } else {
+                Assert.assertTrue(
+                        "Chat last line " + visitorMsg + "is not as expected", false
+                );
             }
         }
 

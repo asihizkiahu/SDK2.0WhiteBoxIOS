@@ -51,7 +51,10 @@ public class BaseTest  {
     }
 
     private void configureLog4J(){
-        java.net.URL url = getClass().getResource(getProps().getProperty(LOG4J_PROP_FILE_PATH_KEY_VALUE));
+        java.net.URL url = getClass().getResource(
+                getProps().getProperty(
+                        LOG4J_PROP_FILE_PATH_KEY_VALUE)
+        );
         PropertyConfigurator.configure(url);
     }
 

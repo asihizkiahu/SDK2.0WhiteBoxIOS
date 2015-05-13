@@ -1,6 +1,7 @@
 package appium;
 
 import com.config.base.ConfigItemsRouter;
+import com.config.lpadk.ConfigInjector;
 import com.pages.demo_app.ChooseChatType;
 import com.pages.demo_app.ChooseCustomerType;
 import com.service.activate.demo_app.ChatActivator;
@@ -17,7 +18,7 @@ import org.openqa.selenium.ScreenOrientation;
  * Created by asih on 18/03/2015.
  */
 public class SanityTest extends BaseTest {
-
+    
     private static final String TEST_DIR = "./src/main/resources/first_test_demo/";
     private static final String SITE_ID = "71807640";
     private DemoActivator demo = DemoActivator.getInstance();
