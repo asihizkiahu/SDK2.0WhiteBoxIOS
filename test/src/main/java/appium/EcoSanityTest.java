@@ -89,7 +89,9 @@ public class EcoSanityTest extends BaseTest {
                 service.isRingingCountAsExpected(agents.get(1), 1, 5000)
         );
         if(service.isRingingCountAsExpected(agents.get(1), 1, 5000)){
-            service.startChat(agents.get(1));
+            Assert.assertTrue(
+                    "Chat last line " + visitorMsg + "is not as expected", service.startChat(agents.get(1))
+            );
             appiumService.implicitWait(3000);
             if(service.verifyLatestChatLines(agents.get(1), visitorMsg)) {
                 service.addChatLines(agents.get(1), agentMsg);
@@ -105,7 +107,6 @@ public class EcoSanityTest extends BaseTest {
                 );
             }
         }
-
     }
 
     @After
