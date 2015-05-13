@@ -107,7 +107,7 @@ public class EcoSanityTest extends BaseTest {
 
         Assert.assertTrue(
                 "Chat last line " + agentMsg + "is not as expected ",
-                service.verifyLatestChatLines(agents.get(1), agentMsg)
+                service.verifyLatestChatLines(mobileAgent, agentMsg)
         );
     }
 
