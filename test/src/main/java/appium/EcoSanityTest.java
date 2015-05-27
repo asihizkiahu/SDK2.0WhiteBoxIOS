@@ -47,7 +47,7 @@ public class EcoSanityTest extends BaseTest {
     }
 
     private void initAgentService(){
-        service.setup(TEST_DIR, agents);
+        agents = service.setup(TEST_DIR);
         initLoginState();
     }
 
@@ -66,14 +66,20 @@ public class EcoSanityTest extends BaseTest {
 
         prepareAgentForChat();
         demoActivator.enterChat();
+        verifyChatSystemMsg("Agents are standing by...");
 
         chatActivator.sendChatMsg(visitorMsg);
+        Assert.assertTrue(
+                "Message " + visitorMsg + " + do not appear in chat",
+                chatValidator.isMsgAppearInChat(visitorMsg)
+        );
         activateAgentConversation();
 
         chatActivator.ensSession();
         service.endChat(agents.get(1));
 
         infoActivator.setSkill("Asi Hiz", "tech support");
+
         chatValidator.verifySkillRemainLegual(SITE_ID + "\\mobile");
 
     }
@@ -82,7 +88,7 @@ public class EcoSanityTest extends BaseTest {
         service.logInAndSetState(repsState, agentStates);
     }
 
-    private void activateAgentConversation(){
+    private void activateAgentConversation() {
         Rep mobileAgent = service.getFirstMobileAgent();
 
         Assert.assertNotNull("There is no mobile agent", mobileAgent);
@@ -90,24 +96,32 @@ public class EcoSanityTest extends BaseTest {
                 "Ringing count is not as expected",
                 service.isRingingCountAsExpected(mobileAgent, 1, 5000)
         );
-
         Assert.assertTrue(
                 "Start chat encountered a problem",
                 service.startChat(mobileAgent)
         );
-
-        appiumService.implicitWait(3000);
-
-        Assert.assertTrue(
-                "Chat last line " + visitorMsg + "is not as expected",
-                service.verifyLatestChatLines(mobileAgent, visitorMsg)
-        );
+        verifyChatMsg(visitorMsg);
 
         service.addChatLines(agents.get(1), agentMsg);
-
+        verifyChatMsg(agentMsg);
         Assert.assertTrue(
                 "Chat last line " + agentMsg + "is not as expected ",
                 service.verifyLatestChatLines(mobileAgent, agentMsg)
+        );
+    }
+
+    private void verifyChatMsg(String msg){
+        AppiumService.getInstance().implicitWait(1500);
+        Assert.assertTrue(
+                "Message " + msg + " + do not appear in chat",
+                chatValidator.isMsgAppearInChat(msg)
+        );
+    }
+
+    private void verifyChatSystemMsg(String msg){
+        Assert.assertTrue(
+                "Message Agents are standing by... do not appear in chat",
+                chatValidator.isSystemMsgAppearInTop("Agents are standing by...", 5000)
         );
     }
 
