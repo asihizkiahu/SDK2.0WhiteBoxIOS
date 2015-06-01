@@ -29,20 +29,21 @@ public class ChatActivator {
         return INSTANCE;
     }
 
-    public void sendChatMsg(String msg) throws Exception {
-
-        while (!chatPage.validateInPage()){
-            try {
-                Thread.sleep(waitForPageSourceInterval);
-                timeOutInMilisec -= waitForPageSourceInterval;
-                if(timeOutInMilisec <= 0){
-                    GeneralUtils.handleError("Time out finished without getting chat",
-                            new Exception("Time out finished without finding results"));
+    public void sendChatMsg(String msg, boolean isNewChat) throws Exception {
+        if(isNewChat) {
+            while (!chatPage.validateInPage()) {
+                try {
+                    Thread.sleep(waitForPageSourceInterval);
+                    timeOutInMilisec -= waitForPageSourceInterval;
+                    if (timeOutInMilisec <= 0) {
+                        GeneralUtils.handleError("Time out finished without getting chat",
+                                new Exception("Time out finished without finding results"));
+                        return;
+                    }
+                } catch (InterruptedException e) {
+                    GeneralUtils.handleError("Error in wait for time out", e);
                     return;
                 }
-            }catch (InterruptedException e) {
-                GeneralUtils.handleError("Error in wait for time out", e);
-                return;
             }
         }
         ReflectivePageFlow.invoke(Chat.class, chatPage, Arrays.asList(InfraConstants.PREPARE_ELEMENTS_M_NAME));

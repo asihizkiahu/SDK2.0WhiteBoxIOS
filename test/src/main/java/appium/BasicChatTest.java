@@ -5,13 +5,15 @@ import com.config.base.ConfigItemsRouter;
 import com.liveperson.AgentState;
 import com.liveperson.Rep;
 import com.service.activate.demo_app.DemoActivator;
-import com.service.activate.echo_test.ChatActivator;
 import com.service.activate.echo_test.InfoActivator;
 import com.service.activate.echo_test.SettingsActivator;
 import com.service.validate.echo_test.ChatService;
 import com.ui.service.AppiumService;
 import com.ui.service.drivers.AppiumDrivers;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +24,7 @@ import static com.liveperson.AgentState.Online;
  * Created by asih on 18/03/2015.
  *
  */
-public class EcoSanityTest extends BaseTest {
+public class BasicChatTest extends BaseTest {
 
     private final String TEST_DIR = "./src/main/resources/eco_sanity_test/";
     private final String SITE_ID = "89961346";
@@ -50,18 +52,17 @@ public class EcoSanityTest extends BaseTest {
 
     private void initAgentLoginState(){
         repsState.add(agents.get(0));
-        repsState.add(agents.get(1));
-        agentStates.add(Online);
         agentStates.add(Online);
     }
 
     @Test
-    public void sanityTest() throws Exception {
+    public void sendBidirectionalMsgTest() throws Exception {
         settingsActivator.connectToAccount(SITE_ID);
         infoActivator.setSkill("aaaa", "mobile");
 
         chatService.startAndValidateChat(service, repsState, agentStates);
         chatService.activateAndValidateTwoWayMsg(service, visitorMsg, agentMsg);
+        chatService.activateAndValidateTwoWayMsg(service, "aaa", "bbb");
         chatService.closeChat(service, agents.get(1));
 
         infoActivator.setSkill("Asi Hiz", "tech support");

@@ -109,7 +109,7 @@ public class Chat extends AppiumBasePage {
         return activate;
     }
 
-String unique = "Send a message";
+String unique = "Hide Chat";
     @Override
     public String getPageUniqueIdentifier() throws NotInPageException {
         return unique;
