@@ -18,6 +18,7 @@ public class Chat extends AppiumBasePage {
     private final By MSG = By.className("android.widget.EditText");
     private final By BUTTON = By.className("android.widget.Button");
     protected final String sendText = "Send";
+    protected final String msgText = "Send a message";
     protected final String endSessionText = "End Session";
     private final By ACCEPT_END = By.id("android:id/button1");
     //    private final By Send = By.id(InfraConstants.CHAT_PAGE_PREFIX + "6");
@@ -39,14 +40,15 @@ public class Chat extends AppiumBasePage {
 
     @Override
     public void prepareElements() {
-        msg = service.findElement(MSG, className + "=msg");
+//        msg = service.findElement(MSG, className + "=msg");
         send = service.getElementByText(BUTTON, sendText);
     }
 
     public class Activate {
 
         public void sendMsg(String _msg) {
-            msg.sendKeys(_msg);
+            service.getElementByText(MSG, msgText).sendKeys(_msg);
+//            msg.sendKeys(_msg);
             send.click();
             service.implicitWait(1500);
         }

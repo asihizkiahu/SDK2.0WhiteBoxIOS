@@ -10,10 +10,7 @@ import com.service.activate.echo_test.SettingsActivator;
 import com.service.validate.echo_test.ChatService;
 import com.ui.service.AppiumService;
 import com.ui.service.drivers.AppiumDrivers;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,18 +23,21 @@ import static com.liveperson.AgentState.Online;
  */
 public class BasicChatTest extends BaseTest {
 
-    private final String TEST_DIR = "./src/main/resources/eco_sanity_test/";
+    private final String TEST_DIR = "./src/main/resources/send_bidirecional_msg_test/";
     private final String SITE_ID = "89961346";
     private SettingsActivator settingsActivator = SettingsActivator.getInstance();
     private InfoActivator infoActivator = InfoActivator.getInstance();
 
     private ChatService chatService = ChatService.getInstance();
-    private List<Rep> agents = new ArrayList<Rep>();
+    private static List<Rep> agents = new ArrayList<Rep>();
     private List<Rep> repsState = new ArrayList<Rep>();
     private List<AgentState> agentStates = new ArrayList<AgentState>();
     private AgentService service = AgentService.getInstance();
     private final String visitorMsg = "I need help";
     private final String agentMsg = "Me too";
+    private final String visitorLongMsg = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+    private final String agentLongMsg = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
+
 
     @Before
     public void setUp() throws Exception {
@@ -63,7 +63,20 @@ public class BasicChatTest extends BaseTest {
         chatService.startAndValidateChat(service, repsState, agentStates);
         chatService.activateAndValidateTwoWayMsg(service, visitorMsg, agentMsg);
         chatService.activateAndValidateTwoWayMsg(service, "aaa", "bbb");
-        chatService.closeChat(service, agents.get(1));
+        chatService.closeChat(service, agents.get(0));
+
+        infoActivator.setSkill("Asi Hiz", "tech support");
+        chatService.verifySkillRemainLegual(SITE_ID + "\\mobile");
+    }
+
+    @Test
+    public void sendLongMessagesTest() throws Exception {
+        settingsActivator.connectToAccount(SITE_ID);
+        infoActivator.setSkill("aaaa", "mobile");
+
+        chatService.startAndValidateChat(service, repsState, agentStates);
+        chatService.activateAndValidateTwoWayMsg(service, visitorLongMsg, agentLongMsg);
+        chatService.closeChat(service, agents.get(0));
 
         infoActivator.setSkill("Asi Hiz", "tech support");
         chatService.verifySkillRemainLegual(SITE_ID + "\\mobile");
@@ -72,7 +85,13 @@ public class BasicChatTest extends BaseTest {
     @After
     public void tearDown() throws Exception {
         super.tearDown(DriverType.APPIUM);
-        service.tearDown(agents);
+        AgentService.tearDown(agents);
+    }
+
+    @AfterClass
+    public static void after() throws Exception {
+        BaseTest.after(DriverType.APPIUM);
+        AgentService.tearDown(agents);
     }
 
 

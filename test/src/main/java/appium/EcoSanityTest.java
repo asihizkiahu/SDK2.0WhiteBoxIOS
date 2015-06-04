@@ -30,7 +30,7 @@ public class EcoSanityTest extends BaseTest {
     private InfoActivator infoActivator = InfoActivator.getInstance();
 
     private ChatService chatService = ChatService.getInstance();
-    private List<Rep> agents = new ArrayList<Rep>();
+    private static List<Rep> agents = new ArrayList<Rep>();
     private List<Rep> repsState = new ArrayList<Rep>();
     private List<AgentState> agentStates = new ArrayList<AgentState>();
     private AgentService service = AgentService.getInstance();
@@ -71,7 +71,13 @@ public class EcoSanityTest extends BaseTest {
     @After
     public void tearDown() throws Exception {
         super.tearDown(DriverType.APPIUM);
-        service.tearDown(agents);
+        AgentService.tearDown(agents);
+    }
+
+    @AfterClass
+    public static void after() throws Exception {
+        BaseTest.after(DriverType.APPIUM);
+        AgentService.tearDown(agents);
     }
 
 
