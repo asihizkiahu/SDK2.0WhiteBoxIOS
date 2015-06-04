@@ -82,6 +82,33 @@ public class BasicChatTest extends BaseTest {
         chatService.verifySkillRemainLegual(SITE_ID + "\\mobile");
     }
 
+    @Test
+    public void f() throws Exception {
+        settingsActivator.connectToAccount(SITE_ID);
+        infoActivator.setSkill("aaaa", "mobile");
+
+        chatService.startAndValidateChat(service, repsState, agentStates);
+        chatService.activateAndValidateTwoWayMsg(service, visitorMsg, agentMsg);
+        chatService.activateAndValidateTwoWayMsg(service, "aaa", "bbb");
+        chatService.closeChat(service, agents.get(0));
+
+        infoActivator.setSkill("Asi Hiz", "tech support");
+        chatService.verifySkillRemainLegual(SITE_ID + "\\mobile");
+    }
+
+    @Test
+    public void h() throws Exception {
+        settingsActivator.connectToAccount(SITE_ID);
+        infoActivator.setSkill("aaaa", "mobile");
+
+        chatService.startAndValidateChat(service, repsState, agentStates);
+        chatService.activateAndValidateTwoWayMsg(service, visitorLongMsg, agentLongMsg);
+        chatService.closeChat(service, agents.get(0));
+
+        infoActivator.setSkill("Asi Hiz", "tech support");
+        chatService.verifySkillRemainLegual(SITE_ID + "\\mobile");
+    }
+
     @After
     public void tearDown() throws Exception {
         super.tearDown(DriverType.APPIUM);
