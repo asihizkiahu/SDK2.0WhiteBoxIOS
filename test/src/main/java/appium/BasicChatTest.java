@@ -112,7 +112,6 @@ public class BasicChatTest extends BaseTest {
     @After
     public void tearDown() throws Exception {
         super.tearDown(DriverType.APPIUM);
-        AgentService.tearDown(agents);
     }
 
     @AfterClass
