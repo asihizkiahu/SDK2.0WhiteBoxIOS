@@ -24,7 +24,7 @@ import static com.liveperson.AgentState.Online;
 */
 public class EcoSanityTest extends BaseTest {
 
-    private static final String TEST_DIR = "./src/main/resources/send_bidirecional_msg_test/";
+    private static final String TEST_DIR = "./src/main/resources/basic_chat_tests/";
     private static final String SITE_ID = "89961346";
     private static SettingsActivator settingsActivator = SettingsActivator.getInstance();
     private static InfoActivator infoActivator = InfoActivator.getInstance();

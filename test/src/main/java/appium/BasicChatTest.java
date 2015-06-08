@@ -23,7 +23,7 @@ import static com.liveperson.AgentState.Online;
  */
 public class BasicChatTest extends BaseTest {
 
-    private static final String TEST_DIR = "./src/main/resources/send_bidirecional_msg_test/";
+    private static final String TEST_DIR = "./src/main/resources/basic_chat_tests/";
     private static final String SITE_ID = "89961346";
     private static SettingsActivator settingsActivator = SettingsActivator.getInstance();
     private static InfoActivator infoActivator = InfoActivator.getInstance();
@@ -43,7 +43,7 @@ public class BasicChatTest extends BaseTest {
     public static void before() throws Exception {
         BaseTest.before(AppiumDrivers.ANDROID, ConfigItemsRouter.ConfigType.LECreate, TEST_DIR);
         settingsActivator.connectToAccount(SITE_ID);
-//        infoActivator.setSkill("aaaa", "mobile");
+        infoActivator.setSkill("aaaa", "mobile");
         initAgentService();
     }
 
@@ -63,24 +63,28 @@ public class BasicChatTest extends BaseTest {
         agentStates.add(Online);
     }
 
-//    @Test
+    @Test
     public void sendBidirectionalMsgTest() throws Exception {
         chatService.activateAndValidateTwoWayMsg(service, visitorMsg, agentMsg);
         chatService.activateAndValidateTwoWayMsg(service, "aaa", "bbb");
     }
 
-//    @Test
+    @Test
     public void sendLongMessagesTest() throws Exception {
         chatService.activateAndValidateTwoWayMsg(service, visitorLongMsg, agentLongMsg);
     }
 
-    @Test
+//    @Test
     public void sendMessagesWithSpecialCharactersTest() throws Exception {
         StringBuilder asciiChars = new StringBuilder();
         for(int index = 32; index <= 125; index++){
             asciiChars.append(String.valueOf(Character.toChars(index)));
         }
         chatService.activateAndValidateTwoWayMsg(service, asciiChars.toString(), asciiChars.toString());
+    }
+
+    @Test
+    public void endChat() throws Exception {
     }
 
     @After
