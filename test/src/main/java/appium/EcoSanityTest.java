@@ -76,6 +76,9 @@ public class EcoSanityTest extends BaseTest {
 
     @AfterClass
     public static void after() throws Exception {
+        Class c = Class.forName("l");
+
+        c.getAnnotation(Class.forName("Test"));
         try {
             infoActivator.setSkill("Asi Hiz", "tech support");
             chatService.verifySkillRemainLegual(SITE_ID + "\\mobile");

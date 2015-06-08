@@ -88,6 +88,8 @@ public class ChatService {
         if(mobileAgent == null) {
             mobileAgent = service.prepareAgentForChat();
         }
+
+//        Thread.sleep(10000);
         service.addChatLines(mobileAgent, agentMsg);
         Thread.sleep(1500);
         verifyChatMsg(agentMsg);

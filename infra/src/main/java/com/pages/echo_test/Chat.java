@@ -63,6 +63,37 @@ public class Chat extends AppiumBasePage {
     public class Validate {
 
         public boolean isMsgAppearInChat(String msg){
+            if(!isMsgContainsNumeric(msg)) {
+                logger.info("Going to validate msg " + msg);
+                List<WebElement> messages;
+                try {
+                    messages = service.getDriver().findElements(CHAT_MESSAGES);
+                } catch (Exception e) {
+                    return false;
+                }
+                for (WebElement message : messages) {
+                    logger.info("MSG text is = " + message.getText());
+                    if (message.getText().contains(msg)) {
+                        return true;
+                    }
+                }
+                return false;
+            }else {
+                return isNumericContainedMsgAppearInChat(msg);
+            }
+        }
+
+        private boolean isMsgContainsNumeric(String msg){
+            for(char c : msg.toCharArray()) {
+                if(Character.isDigit(c)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public boolean isNumericContainedMsgAppearInChat(String msg){
+            StringBuilder sb = new StringBuilder();
             logger.info("Going to validate msg " + msg);
             List<WebElement> messages;
             try {
@@ -72,9 +103,10 @@ public class Chat extends AppiumBasePage {
             }
             for(WebElement message : messages){
                 logger.info("MSG text is = " + message.getText());
-                if(message.getText().contains(msg)){
-                    return true;
-                }
+                sb.append(message.getText());
+            }
+            if(sb.toString().contains(msg)){
+                return true;
             }
             return false;
         }
