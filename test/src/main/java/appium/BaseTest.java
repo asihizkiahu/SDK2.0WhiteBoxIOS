@@ -23,11 +23,15 @@ public class BaseTest  {
         setProps(PropertiesHandlerImpl.getInstance().parseFromJar(ENV_PROP_FILE_PATH));
     }
 
-    protected AppiumService service = AppiumService.getInstance();
+    protected static AppiumService service = AppiumService.getInstance();
 
 
-    public void setUp(AppiumDrivers driver, ConfigItemsRouter.ConfigType confType, String testPath) throws Exception {
+    protected void setUp() throws Exception {
         configureLog4J();
+
+    }
+
+    public static void before(AppiumDrivers driver, ConfigItemsRouter.ConfigType confType, String testPath) throws Exception {
         service.setDriver(driver, testPath);
         if(confType != null) {
 //            ConfigItemsRouter.getInstance().routeAction(confType, testPath);

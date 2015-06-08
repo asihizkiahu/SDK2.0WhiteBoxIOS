@@ -18,7 +18,7 @@ import org.openqa.selenium.ScreenOrientation;
  * Created by asih on 18/03/2015.
  */
 public class SanityTest extends BaseTest {
-    
+
     private static final String TEST_DIR = "./src/main/resources/first_test_demo/";
     private static final String SITE_ID = "71807640";
     private DemoActivator demo = DemoActivator.getInstance();
@@ -26,12 +26,12 @@ public class SanityTest extends BaseTest {
     private static final Logger logger = Logger.getLogger(SanityTest.class);
 
 
-    @Before
-    public void setUp() throws Exception {
-        super.setUp(
-                AppiumDrivers.ANDROID,
-                ConfigItemsRouter.ConfigType.LECreate, TEST_DIR);
-    }
+//    @Before
+//    public void setUp() throws Exception {
+//        super.setUp(
+//                AppiumDrivers.ANDROID,
+//                ConfigItemsRouter.ConfigType.LECreate, TEST_DIR);
+//    }
 
     @Test
     public void apiDemo() throws Exception {

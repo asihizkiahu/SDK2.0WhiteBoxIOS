@@ -29,7 +29,9 @@ public class ChatService {
     private Menu menu = new Menu(true, true);
     private Chat chat = new Chat(true, true);
     private DemoActivator demoActivator = DemoActivator.getInstance();
-    private static Rep mobileAgent;
+
+
+    private Rep mobileAgent;
 
     private ChatService(){
     }
@@ -82,12 +84,12 @@ public class ChatService {
 
     public void activateAndValidateTwoWayMsg(AgentService service, String visitorMsg, String agentMsg) throws Exception {
         sendMsgByChatStatus(visitorMsg);
-        Assert.assertTrue("Message " + visitorMsg + " + do not appear in chat", isMsgAppearInChat(visitorMsg));
+        verifyChatMsg(visitorMsg);
         if(mobileAgent == null) {
             mobileAgent = service.prepareAgentForChat();
         }
-        verifyChatMsg(visitorMsg);
         service.addChatLines(mobileAgent, agentMsg);
+        Thread.sleep(1500);
         verifyChatMsg(agentMsg);
         Assert.assertTrue("Chat last line " + agentMsg + "is not as expected ", service.verifyLatestChatLines(mobileAgent, agentMsg));
     }
@@ -107,5 +109,10 @@ public class ChatService {
     public void closeChat(AgentService service, Rep rep) throws Exception {
         ensSession();
         service.endChat(rep);
+        setMobileAgent(null);
+    }
+
+    public void setMobileAgent(Rep mobileAgent) {
+        this.mobileAgent = mobileAgent;
     }
 }

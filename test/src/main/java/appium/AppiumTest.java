@@ -20,7 +20,7 @@ import org.openqa.selenium.ScreenOrientation;
 
 /**
  * Created by asih on 16/02/2015./
- */    
+ */
 public class AppiumTest extends BaseTest {
 
     private static final String testDir = "./src/main/resources/test1/";
@@ -32,10 +32,10 @@ public class AppiumTest extends BaseTest {
 
 //    static int pnum =0;
 
-    @Before
-    public void setUp() throws Exception {
-        super.setUp(AppiumDrivers.ANDROID, ConfigItemsRouter.ConfigType.LECreate, testDir);
-    }
+//    @Before
+//    public void setUp() throws Exception {
+//        super.setUp(AppiumDrivers.ANDROID, ConfigItemsRouter.ConfigType.LECreate, testDir);
+//    }
 
     @Test
     public void apiDemo() throws Exception {
