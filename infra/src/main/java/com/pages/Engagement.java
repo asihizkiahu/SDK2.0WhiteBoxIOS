@@ -30,6 +30,7 @@ public class Engagement extends AppiumBasePage {
 
     public class Validate {
     }
+
     @Override
     public Validate getValidate() {
         return validate;

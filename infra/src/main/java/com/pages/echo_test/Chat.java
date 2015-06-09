@@ -21,6 +21,7 @@ public class Chat extends AppiumBasePage {
     protected final String msgText = "Send a message";
     protected final String endSessionText = "End Session";
     private final By ACCEPT_END = By.id("android:id/button1");
+    private final By DISMISS = By.id("android:id/button3");
     //    private final By Send = By.id(InfraConstants.CHAT_PAGE_PREFIX + "6");
     private final By CHAT_MESSAGES = By.className("android.widget.TextView");
     private static final Logger logger = Logger.getLogger(Chat.class);
@@ -51,6 +52,10 @@ public class Chat extends AppiumBasePage {
 //            msg.sendKeys(_msg);
             send.click();
             service.implicitWait(1500);
+        }
+
+        public void dismissSession() {
+            service.findElement(DISMISS, className + "=acceptEnd").click();
         }
 
         public void ensSession() {

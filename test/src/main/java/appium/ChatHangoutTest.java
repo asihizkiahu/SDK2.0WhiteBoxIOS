@@ -22,7 +22,7 @@ import static com.liveperson.AgentState.Online;
  * Created by asih on 18/03/2015.
  *
  */
-public class BasicChatTest extends BaseTest {
+public class ChatHangoutTest extends BaseTest {
 
     private static final String TEST_DIR = "./src/main/resources/basic_chat_tests/";
     private static final String SITE_ID = "89961346";
@@ -34,11 +34,6 @@ public class BasicChatTest extends BaseTest {
     private static List<Rep> repsState = new ArrayList<Rep>();
     private static List<AgentState> agentStates = new ArrayList<AgentState>();
     private static AgentService service = AgentService.getInstance();
-    private final String visitorMsg = "I need help";
-    private final String agentMsg = "Me too";
-    private final String visitorLongMsg = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-    private final String agentLongMsg = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
-
 
     @BeforeClass
     public static void before() throws Exception {
@@ -64,29 +59,20 @@ public class BasicChatTest extends BaseTest {
     }
 
     @Test
-    public void sendBidirectionalMsgTest() throws Exception {
+    public void endSessionByVisitor() throws Exception {
         super.startChat(service, chatService, repsState, agentStates, agents.get(0));
-        chatService.activateAndValidateTwoWayMsg(service, visitorMsg, agentMsg, false, "");
-        chatService.activateAndValidateTwoWayMsg(service, "aaa", "bbb", false, "");
-        super.closeChat(service, chatService, agents.get(0));
+        chatService.activateAndValidateTwoWayMsg(service, "a", "a", false, "");
+        chatService.ensSession(service, agents.get(0));
+        chatService.verifyIsInEngagementPage();
     }
 
     @Test
-    public void sendLongMessagesTest() throws Exception {
+    public void endChatByAgent() throws Exception {
         super.startChat(service, chatService, repsState, agentStates, agents.get(0));
-        chatService.activateAndValidateTwoWayMsg(service, visitorLongMsg, agentLongMsg, false, "");
-        super.closeChat(service, chatService, agents.get(0));
-    }
-
-    @Test
-    public void sendMessagesWithSpecialCharactersTest() throws Exception {
-        super.startChat(service, chatService, repsState, agentStates, agents.get(0));
-        StringBuilder asciiChars = new StringBuilder();
-        for(int index = 32; index <= 125; index++){
-            asciiChars.append(String.valueOf(Character.toChars(index)));
-        }
-        chatService.activateAndValidateTwoWayMsg(service, asciiChars.toString(), "1234567890", false, "");
-        super.closeChat(service, chatService, agents.get(0));
+        chatService.activateAndValidateTwoWayMsg(service, "a", "a", false, "");
+        service.endChat(agents.get(0));
+        chatService.setIsChatStarted(false);
+        chatService.dismissSession();
     }
 
     @After

@@ -3,6 +3,7 @@ package com.service.validate.echo_test;
 import com.agent.AgentService;
 import com.liveperson.AgentState;
 import com.liveperson.Rep;
+import com.pages.Engagement;
 import com.pages.echo_test.Chat;
 import com.pages.echo_test.Info;
 import com.pages.echo_test.InfraConstants;
@@ -28,6 +29,7 @@ public class ChatService {
     private Info info = new Info(true, true);
     private Menu menu = new Menu(true, true);
     private Chat chat = new Chat(true, true);
+    private Engagement engagement = new Engagement(true, true);
     private DemoActivator demoActivator = DemoActivator.getInstance();
 
     private Rep currentAgent;
@@ -51,6 +53,10 @@ public class ChatService {
 
         ReflectivePageFlow.invoke(Info.class, info, Arrays.asList(InfraConstants.VALIDATE_IN_PAGE_M_NAME, InfraConstants.PREPARE_ELEMENTS_M_NAME));
         info.getValidate().verifySkillRemainLegual(skill);
+    }
+
+    public void verifyIsInEngagementPage(){
+        ReflectivePageFlow.invoke(Engagement.class, engagement, Arrays.asList(InfraConstants.VALIDATE_IN_PAGE_M_NAME, InfraConstants.PREPARE_ELEMENTS_M_NAME));
     }
 
     public boolean isMsgAppearInChat(String msg){
@@ -83,7 +89,7 @@ public class ChatService {
         verifyChatSystemMsg("Agents are standing by...");
     }
 
-    public void activateAndValidateTwoWayMsg(AgentService service, String visitorMsg, String agentMsg, boolean isCheckSpecificAgent, String repNickName) throws Exception {
+    public void activateAndValidateTwoWayMsg(AgentService service, String visitorMsg, String agentMsg, boolean isCheckSpecificAgent, String repNickName)  throws Exception{
         sendMsgByChatStatus(visitorMsg);
         verifyChatMsg(visitorMsg);
         if(!isChatStarted) {
@@ -100,26 +106,36 @@ public class ChatService {
         Assert.assertTrue("Chat last line " + agentMsg + "is not as expected ",
                 service.verifyLatestChatLines(
                         currentAgent,
-                        agentMsg
-                ));
+                        agentMsg));
+    }
+
+    public void dismissSession() {
+        ReflectivePageFlow.invoke(Chat.class, chat, Arrays.asList(InfraConstants.VALIDATE_IN_PAGE_M_NAME, InfraConstants.PREPARE_ELEMENTS_M_NAME));
+        chat.getActivate().dismissSession();
     }
 
     private void sendMsgByChatStatus(String visitorMsg) throws Exception {
-        if(currentAgent == null) {
+        if(!isChatStarted) {
             chatActivator.sendChatMsg(visitorMsg, true);
         }else{
             chatActivator.sendChatMsg(visitorMsg, false);
         }
     }
 
-    private void ensSession() throws Exception {
+    public void ensSession(AgentService service, Rep rep) throws Exception {
         chatActivator.ensSession();
+        service.endChat(rep);
+        isChatStarted = false;
     }
 
     public void closeChat(AgentService service, Rep rep) throws Exception {
-        ensSession();
+        ensSession(service, rep);
         service.endChat(rep);
         isChatStarted = false;
+    }
+
+    public void setIsChatStarted(boolean isChatStarted){
+        this.isChatStarted = isChatStarted;
     }
 
 }

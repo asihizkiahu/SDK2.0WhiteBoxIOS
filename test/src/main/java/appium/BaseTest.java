@@ -2,11 +2,15 @@
 package appium;
 
 
+import com.agent.AgentService;
 import com.config.base.ConfigItemsRouter;
 import com.liveperson.AgentState;
+import com.liveperson.Rep;
+import com.service.validate.echo_test.ChatService;
 import com.ui.service.AppiumService;
 import com.ui.service.drivers.AppiumDrivers;
 import com.ui.service.drivers.SeleniumDrivers;
+import com.util.genutil.GeneralUtils;
 import com.util.properties.PropertiesHandlerImpl;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -42,6 +46,22 @@ public class BaseTest  {
 
     protected void changeAgentState(List<AgentState> agentStates, int agentLocation, AgentState stateToChange){
         agentStates.set(agentLocation, stateToChange);
+    }
+
+    protected void startChat(AgentService service, ChatService chatService, List<Rep> repsState, List<AgentState> agentStates, Rep agent){
+        try {
+            chatService.startAndValidateChat(service, repsState, agentStates, agent);
+        } catch (Exception e) {
+            GeneralUtils.handleError("Error while starting chat", e);
+        }
+    }
+
+    protected void closeChat(AgentService service, ChatService chatService, Rep agent){
+        try {
+            chatService.closeChat(service, agent);
+        } catch (Exception e) {
+            GeneralUtils.handleError("Error while starting chat", e);
+        }
     }
 
     protected void tearDown(DriverType driver) throws Exception {
