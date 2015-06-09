@@ -46,6 +46,7 @@ public class Info extends AppiumBasePage {
         public void verifySkillRemainLegual(String _skill) throws Exception {
             Assert.assertEquals("Skill changed when not expected", _skill,
                     service.findElement(ACC_SKILL_STATUS, className + "=setAccountSkill").getText());;
+            service.getDriver().navigate().back();
         }
     }
 

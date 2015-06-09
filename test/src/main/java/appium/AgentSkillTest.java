@@ -73,8 +73,8 @@ public class AgentSkillTest extends BaseTest {
     public void chatWithAgentBySkillTest(AgentSkillData agentSkillData) {
         try {
             infoActivator.setSkill("", agentSkillData.skill);
-            chatService.startAndValidateChat(service, repsState, agentStates);
-            chatService.activateAndValidateTwoWayMsg(service, "aaa", agentSkillData.nickName + ": " + agentSkillData.msg);
+            chatService.startAndValidateChat(service, repsState, agentStates, agents.get(agentSkillData.agentLocation));
+            chatService.activateAndValidateTwoWayMsg(service, "aaa", agentSkillData.msg, true, agentSkillData.nickName);
             chatService.closeChat(service, agents.get(agentSkillData.agentLocation));
             chatService.verifySkillRemainLegual(SITE_ID + "\\" + agentSkillData.skill);
         } catch (Exception e) {
@@ -102,11 +102,11 @@ public class AgentSkillTest extends BaseTest {
 
     private static class Constants{
 
-        private static final String AGENT_A_SKILL = "skill1";
+        private static final String AGENT_A_SKILL = "Fashion";
         private static final String AGENT_B_SKILL = "mobile";
         private static final String AGENT_A_NICK_NAME = "Asi Hiz";
         private static final String AGENT_B_NICK_NAME = "Asi the king of agents";
-        private static final String AGENT_A_MSG = "I am agent A, my skill is sales";
+        private static final String AGENT_A_MSG = "I am agent A, my skill is fashion";
         private static final String AGENT_B_MSG = "I am agent B, my skill is mobile";
     }
 

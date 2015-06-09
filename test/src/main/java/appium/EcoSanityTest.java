@@ -24,7 +24,7 @@ import static com.liveperson.AgentState.Online;
 */
 public class EcoSanityTest extends BaseTest {
 
-    private static final String TEST_DIR = "./src/main/resources/basic_chat_tests/";
+    private static final String TEST_DIR = "./src/main/resources/eco_sanity_test/";
     private static final String SITE_ID = "89961346";
     private static SettingsActivator settingsActivator = SettingsActivator.getInstance();
     private static InfoActivator infoActivator = InfoActivator.getInstance();
@@ -48,7 +48,7 @@ public class EcoSanityTest extends BaseTest {
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        chatService.startAndValidateChat(service, repsState, agentStates);
+        chatService.startAndValidateChat(service, repsState, agentStates, agents.get(1));
     }
 
     private static void initAgentService(){
@@ -58,20 +58,20 @@ public class EcoSanityTest extends BaseTest {
 
     private static void initAgentLoginState(){
         repsState.add(agents.get(0));
-        repsState.add(agents.get(0));
+        repsState.add(agents.get(1));
         agentStates.add(Online);
         agentStates.add(Online);
     }
 
     @Test
     public void sanityTest() throws Exception {
-        chatService.activateAndValidateTwoWayMsg(service, visitorMsg, agentMsg);
+        chatService.activateAndValidateTwoWayMsg(service, visitorMsg, agentMsg, false, "");
 
     }
 
     @After
     public void tearDown() throws Exception {
-        chatService.closeChat(service, agents.get(0));
+        chatService.closeChat(service, agents.get(1));
     }
 
     @AfterClass

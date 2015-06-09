@@ -30,8 +30,8 @@ public class ChatService {
     private Chat chat = new Chat(true, true);
     private DemoActivator demoActivator = DemoActivator.getInstance();
 
-
-    private Rep mobileAgent;
+    private Rep currentAgent;
+    private boolean isChatStarted = false;
 
     private ChatService(){
     }
@@ -54,14 +54,14 @@ public class ChatService {
     }
 
     public boolean isMsgAppearInChat(String msg){
-        if(mobileAgent == null) {
+        if(!isChatStarted) {
             ReflectivePageFlow.invoke(Chat.class, chat, Arrays.asList(InfraConstants.VALIDATE_IN_PAGE_M_NAME, InfraConstants.PREPARE_ELEMENTS_M_NAME));
         }
         return chat.getValidate().isMsgAppearInChat(msg);
     }
 
     public boolean isSystemMsgAppearInTop(String msg, long timeOutInMilisec){
-        if(mobileAgent == null) {
+        if(!isChatStarted) {
             ReflectivePageFlow.invoke(Chat.class, chat, Arrays.asList(InfraConstants.VALIDATE_IN_PAGE_M_NAME, InfraConstants.PREPARE_ELEMENTS_M_NAME));
         }
         return chat.getValidate().isSystemMsgAppearInTop(msg, timeOutInMilisec);
@@ -76,28 +76,36 @@ public class ChatService {
         Assert.assertTrue("Message Agents are standing by... do not appear in chat", isSystemMsgAppearInTop("Agents are standing by...", 5000));
     }
 
-    public void startAndValidateChat(AgentService service, List<Rep> repsState, List<AgentState> agentStates) throws Exception {
+    public void startAndValidateChat(AgentService service, List<Rep> repsState, List<AgentState> agentStates, Rep agent) throws Exception {
         service.logInAndSetState(repsState, agentStates);
         demoActivator.enterChat();
+        currentAgent = agent;
         verifyChatSystemMsg("Agents are standing by...");
     }
 
-    public void activateAndValidateTwoWayMsg(AgentService service, String visitorMsg, String agentMsg) throws Exception {
+    public void activateAndValidateTwoWayMsg(AgentService service, String visitorMsg, String agentMsg, boolean isCheckSpecificAgent, String repNickName) throws Exception {
         sendMsgByChatStatus(visitorMsg);
         verifyChatMsg(visitorMsg);
-        if(mobileAgent == null) {
-            mobileAgent = service.prepareAgentForChat();
+        if(!isChatStarted) {
+            service.prepareAgentForChat(currentAgent);
+            isChatStarted = true;
         }
-
-//        Thread.sleep(10000);
-        service.addChatLines(mobileAgent, agentMsg);
-        Thread.sleep(1500);
-        verifyChatMsg(agentMsg);
-        Assert.assertTrue("Chat last line " + agentMsg + "is not as expected ", service.verifyLatestChatLines(mobileAgent, agentMsg));
+        service.addChatLines(currentAgent, agentMsg);
+        Thread.sleep(2500);
+        if(!isCheckSpecificAgent) {
+            verifyChatMsg(agentMsg);
+        }else{
+            verifyChatMsg( repNickName + ": " + agentMsg);
+        }
+        Assert.assertTrue("Chat last line " + agentMsg + "is not as expected ",
+                service.verifyLatestChatLines(
+                        currentAgent,
+                        agentMsg
+                ));
     }
 
     private void sendMsgByChatStatus(String visitorMsg) throws Exception {
-        if(mobileAgent == null) {
+        if(currentAgent == null) {
             chatActivator.sendChatMsg(visitorMsg, true);
         }else{
             chatActivator.sendChatMsg(visitorMsg, false);
@@ -111,10 +119,7 @@ public class ChatService {
     public void closeChat(AgentService service, Rep rep) throws Exception {
         ensSession();
         service.endChat(rep);
-        setMobileAgent(null);
+        isChatStarted = false;
     }
 
-    public void setMobileAgent(Rep mobileAgent) {
-        this.mobileAgent = mobileAgent;
-    }
 }

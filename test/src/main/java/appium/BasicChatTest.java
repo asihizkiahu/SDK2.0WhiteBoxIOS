@@ -50,7 +50,7 @@ public class BasicChatTest extends BaseTest {
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        chatService.startAndValidateChat(service, repsState, agentStates);
+        chatService.startAndValidateChat(service, repsState, agentStates, agents.get(0));
     }
 
     private static void initAgentService(){
@@ -65,13 +65,13 @@ public class BasicChatTest extends BaseTest {
 
     @Test
     public void sendBidirectionalMsgTest() throws Exception {
-        chatService.activateAndValidateTwoWayMsg(service, visitorMsg, agentMsg);
-        chatService.activateAndValidateTwoWayMsg(service, "aaa", "bbb");
+        chatService.activateAndValidateTwoWayMsg(service, visitorMsg, agentMsg, false, "");
+        chatService.activateAndValidateTwoWayMsg(service, "aaa", "bbb", false, "");
     }
 
     @Test
     public void sendLongMessagesTest() throws Exception {
-        chatService.activateAndValidateTwoWayMsg(service, visitorLongMsg, agentLongMsg);
+        chatService.activateAndValidateTwoWayMsg(service, visitorLongMsg, agentLongMsg, false, "");
     }
 
 //    @Test
@@ -80,7 +80,7 @@ public class BasicChatTest extends BaseTest {
         for(int index = 32; index <= 125; index++){
             asciiChars.append(String.valueOf(Character.toChars(index)));
         }
-        chatService.activateAndValidateTwoWayMsg(service, asciiChars.toString(), asciiChars.toString());
+        chatService.activateAndValidateTwoWayMsg(service, asciiChars.toString(), asciiChars.toString(), false, "");
     }
 
     @Test
