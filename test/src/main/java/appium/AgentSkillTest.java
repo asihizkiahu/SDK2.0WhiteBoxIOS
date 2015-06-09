@@ -1,15 +1,12 @@
 package appium;
 
-import appium.BaseTest;
 import com.agent.AgentService;
 import com.config.base.ConfigItemsRouter;
 import com.liveperson.AgentState;
 import com.liveperson.Rep;
-import com.service.activate.demo_app.DemoActivator;
 import com.service.activate.echo_test.InfoActivator;
 import com.service.activate.echo_test.SettingsActivator;
 import com.service.validate.echo_test.ChatService;
-import com.ui.service.AppiumService;
 import com.ui.service.drivers.AppiumDrivers;
 import org.junit.*;
 
@@ -74,7 +71,7 @@ public class AgentSkillTest extends BaseTest {
         try {
             infoActivator.setSkill("", agentSkillData.skill);
             chatService.startAndValidateChat(service, repsState, agentStates, agents.get(agentSkillData.agentLocation));
-            chatService.activateAndValidateTwoWayMsg(service, "aaa", agentSkillData.msg, true, agentSkillData.nickName);
+            chatService.handleMessagesFlow(service, "aaa", agentSkillData.msg, true, agentSkillData.nickName);
             chatService.closeChat(service, agents.get(agentSkillData.agentLocation));
             chatService.verifySkillRemainLegual(SITE_ID + "\\" + agentSkillData.skill);
         } catch (Exception e) {

@@ -4,13 +4,10 @@ import com.agent.AgentService;
 import com.config.base.ConfigItemsRouter;
 import com.liveperson.AgentState;
 import com.liveperson.Rep;
-import com.service.activate.demo_app.DemoActivator;
 import com.service.activate.echo_test.InfoActivator;
 import com.service.activate.echo_test.SettingsActivator;
 import com.service.validate.echo_test.ChatService;
-import com.ui.service.AppiumService;
 import com.ui.service.drivers.AppiumDrivers;
-import com.util.genutil.GeneralUtils;
 import org.junit.*;
 
 import java.util.ArrayList;
@@ -66,15 +63,15 @@ public class BasicChatTest extends BaseTest {
     @Test
     public void sendBidirectionalMsgTest() throws Exception {
         super.startChat(service, chatService, repsState, agentStates, agents.get(0));
-        chatService.activateAndValidateTwoWayMsg(service, visitorMsg, agentMsg, false, "");
-        chatService.activateAndValidateTwoWayMsg(service, "aaa", "bbb", false, "");
+        chatService.handleMessagesFlow(service, visitorMsg, agentMsg, false, "");
+        chatService.handleMessagesFlow(service, "aaa", "bbb", false, "");
         super.closeChat(service, chatService, agents.get(0));
     }
 
     @Test
     public void sendLongMessagesTest() throws Exception {
         super.startChat(service, chatService, repsState, agentStates, agents.get(0));
-        chatService.activateAndValidateTwoWayMsg(service, visitorLongMsg, agentLongMsg, false, "");
+        chatService.handleMessagesFlow(service, visitorLongMsg, agentLongMsg, false, "");
         super.closeChat(service, chatService, agents.get(0));
     }
 
@@ -85,7 +82,7 @@ public class BasicChatTest extends BaseTest {
         for(int index = 32; index <= 125; index++){
             asciiChars.append(String.valueOf(Character.toChars(index)));
         }
-        chatService.activateAndValidateTwoWayMsg(service, asciiChars.toString(), "1234567890", false, "");
+        chatService.handleMessagesFlow(service, asciiChars.toString(), "1234567890", false, "");
         super.closeChat(service, chatService, agents.get(0));
     }
 

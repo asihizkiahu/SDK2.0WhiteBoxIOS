@@ -4,12 +4,9 @@ import com.agent.AgentService;
 import com.config.base.ConfigItemsRouter;
 import com.liveperson.AgentState;
 import com.liveperson.Rep;
-import com.service.activate.demo_app.DemoActivator;
-import com.service.activate.echo_test.ChatActivator;
 import com.service.activate.echo_test.InfoActivator;
 import com.service.activate.echo_test.SettingsActivator;
 import com.service.validate.echo_test.ChatService;
-import com.ui.service.AppiumService;
 import com.ui.service.drivers.AppiumDrivers;
 import org.junit.*;
 
@@ -65,7 +62,7 @@ public class EcoSanityTest extends BaseTest {
 
     @Test
     public void sanityTest() throws Exception {
-        chatService.activateAndValidateTwoWayMsg(service, visitorMsg, agentMsg, false, "");
+        chatService.handleMessagesFlow(service, visitorMsg, agentMsg, false, "");
 
     }
 

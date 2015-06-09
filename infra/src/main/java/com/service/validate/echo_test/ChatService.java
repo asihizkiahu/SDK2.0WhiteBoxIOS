@@ -12,6 +12,7 @@ import com.service.ReflectivePageFlow;
 import com.service.activate.demo_app.DemoActivator;
 import com.service.activate.echo_test.ChatActivator;
 import com.ui.service.AppiumService;
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 
 import java.util.Arrays;
@@ -31,6 +32,7 @@ public class ChatService {
     private Chat chat = new Chat(true, true);
     private Engagement engagement = new Engagement(true, true);
     private DemoActivator demoActivator = DemoActivator.getInstance();
+    private static final Logger logger = Logger.getLogger(ChatService.class);
 
     private Rep currentAgent;
     private boolean isChatStarted = false;
@@ -89,24 +91,43 @@ public class ChatService {
         verifyChatSystemMsg("Agents are standing by...");
     }
 
-    public void activateAndValidateTwoWayMsg(AgentService service, String visitorMsg, String agentMsg, boolean isCheckSpecificAgent, String repNickName)  throws Exception{
-        sendMsgByChatStatus(visitorMsg);
+    public void handleMessagesFlow(AgentService service, String visitorMsg, String agentMsg, boolean isCheckSpecificAgent, String repNickName){
+        try {
+            sendMsgByChatStatus(visitorMsg);
+        } catch (Exception e) {
+            logger.warn("Failed to send visitor msg " + e.getMessage());
+            return;
+        }
         verifyChatMsg(visitorMsg);
         if(!isChatStarted) {
             service.prepareAgentForChat(currentAgent);
             isChatStarted = true;
         }
+        handleAgentMsgFlow(service, agentMsg, isCheckSpecificAgent, repNickName);
+    }
+
+    private void handleAgentMsgFlow(AgentService service, String agentMsg, boolean isCheckSpecificAgent, String repNickName){
         service.addChatLines(currentAgent, agentMsg);
-        Thread.sleep(2500);
+        try {
+            Thread.sleep(2500);
+        } catch (InterruptedException e) {
+            logger.warn("Failed to wait " + e.getMessage());
+        }
+        verifyAgentMsg(agentMsg, isCheckSpecificAgent, repNickName);
+        Assert.assertTrue("Chat last line " + agentMsg + "is not as expected ",
+                service.verifyLatestChatLines(
+                        currentAgent,
+                        agentMsg
+                )
+        );
+    }
+
+    private void verifyAgentMsg(String agentMsg, boolean isCheckSpecificAgent, String repNickName){
         if(!isCheckSpecificAgent) {
             verifyChatMsg(agentMsg);
         }else{
             verifyChatMsg( repNickName + ": " + agentMsg);
         }
-        Assert.assertTrue("Chat last line " + agentMsg + "is not as expected ",
-                service.verifyLatestChatLines(
-                        currentAgent,
-                        agentMsg));
     }
 
     public void dismissSession() {

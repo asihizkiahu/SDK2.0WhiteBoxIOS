@@ -4,13 +4,10 @@ import com.agent.AgentService;
 import com.config.base.ConfigItemsRouter;
 import com.liveperson.AgentState;
 import com.liveperson.Rep;
-import com.service.activate.demo_app.DemoActivator;
 import com.service.activate.echo_test.InfoActivator;
 import com.service.activate.echo_test.SettingsActivator;
 import com.service.validate.echo_test.ChatService;
-import com.ui.service.AppiumService;
 import com.ui.service.drivers.AppiumDrivers;
-import com.util.genutil.GeneralUtils;
 import org.junit.*;
 
 import java.util.ArrayList;
@@ -61,7 +58,7 @@ public class ChatHangoutTest extends BaseTest {
     @Test
     public void endSessionByVisitor() throws Exception {
         super.startChat(service, chatService, repsState, agentStates, agents.get(0));
-        chatService.activateAndValidateTwoWayMsg(service, "a", "a", false, "");
+        chatService.handleMessagesFlow(service, "a", "a", false, "");
         chatService.ensSession(service, agents.get(0));
         chatService.verifyIsInEngagementPage();
     }
@@ -69,7 +66,7 @@ public class ChatHangoutTest extends BaseTest {
     @Test
     public void endChatByAgent() throws Exception {
         super.startChat(service, chatService, repsState, agentStates, agents.get(0));
-        chatService.activateAndValidateTwoWayMsg(service, "a", "a", false, "");
+        chatService.handleMessagesFlow(service, "a", "a", false, "");
         service.endChat(agents.get(0));
         chatService.setIsChatStarted(false);
         chatService.dismissSession();
