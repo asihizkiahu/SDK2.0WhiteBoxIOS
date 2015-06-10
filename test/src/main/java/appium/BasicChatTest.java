@@ -39,7 +39,7 @@ public class BasicChatTest extends BaseTest {
 
     @BeforeClass
     public static void before() throws Exception {
-        BaseTest.before(AppiumDrivers.ANDROID, ConfigItemsRouter.ConfigType.LECreate, TEST_DIR);
+        StaticRouter.before(AppiumDrivers.ANDROID, ConfigItemsRouter.ConfigType.LECreate, TEST_DIR);
         settingsActivator.connectToAccount(SITE_ID);
         infoActivator.setSkill("aaaa", "mobile");
         initAgentService();
@@ -47,7 +47,7 @@ public class BasicChatTest extends BaseTest {
 
     @Before
     public void setUp() throws Exception {
-        super.setUp();
+        super.getRouter().setUp();
     }
 
     private static void initAgentService(){
@@ -62,28 +62,30 @@ public class BasicChatTest extends BaseTest {
 
     @Test
     public void sendBidirectionalMsgTest() throws Exception {
-        super.startChat(service, chatService, repsState, agentStates, agents.get(0));
+        super.getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
+
         chatService.handleMessagesFlow(service, visitorMsg, agentMsg, false, "");
         chatService.handleMessagesFlow(service, "aaa", "bbb", false, "");
-        super.closeChat(service, chatService, agents.get(0));
+
+        super.getChatActivity().closeChat(service, chatService, agents.get(0));
     }
 
     @Test
     public void sendLongMessagesTest() throws Exception {
-        super.startChat(service, chatService, repsState, agentStates, agents.get(0));
+        super.getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
         chatService.handleMessagesFlow(service, visitorLongMsg, agentLongMsg, false, "");
-        super.closeChat(service, chatService, agents.get(0));
+        super.getChatActivity().closeChat(service, chatService, agents.get(0));
     }
 
     @Test
     public void sendMessagesWithSpecialCharactersTest() throws Exception {
-        super.startChat(service, chatService, repsState, agentStates, agents.get(0));
+        super.getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
         StringBuilder asciiChars = new StringBuilder();
         for(int index = 32; index <= 125; index++){
             asciiChars.append(String.valueOf(Character.toChars(index)));
         }
         chatService.handleMessagesFlow(service, asciiChars.toString(), "1234567890", false, "");
-        super.closeChat(service, chatService, agents.get(0));
+        super.getChatActivity().closeChat(service, chatService, agents.get(0));
     }
 
     @After
@@ -92,7 +94,7 @@ public class BasicChatTest extends BaseTest {
 
     @AfterClass
     public static void after() throws Exception {
-        BaseTest.after(DriverType.APPIUM);
+        StaticRouter.after(DriverType.APPIUM);
         AgentService.tearDown(agents);
     }
 

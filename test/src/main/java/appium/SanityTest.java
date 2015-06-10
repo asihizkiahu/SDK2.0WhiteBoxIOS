@@ -46,10 +46,10 @@ public class SanityTest extends BaseTest {
         chat.sendChatMsg("Asi is the king");
     }
 
-    @After
-    public void tearDown() throws Exception {
-        super.tearDown(DriverType.APPIUM);
-    }
+//    @After
+//    public void tearDown() throws Exception {
+//        super.tearDown(DriverType.APPIUM);
+//    }
 
     @AfterClass
     public static void after() throws Exception {

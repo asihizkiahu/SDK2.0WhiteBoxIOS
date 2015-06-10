@@ -38,8 +38,7 @@ public class AgentSkillTest extends BaseTest {
 
     @BeforeClass
     public static void before() throws Exception {
-//        logger.info(AgentSkillTestOutput.testClassDesc()); // move to base
-        BaseTest.before(
+        StaticRouter.before(
                 AppiumDrivers.ANDROID,
                 ConfigItemsRouter.ConfigType.LECreate,
                 TEST_DIR,
@@ -51,7 +50,7 @@ public class AgentSkillTest extends BaseTest {
 
     @Before
     public void setUp() throws Exception {
-        super.setUp();
+        super.getRouter().setUp();
     }
 
     private static void initAgentService(){
@@ -118,7 +117,7 @@ public class AgentSkillTest extends BaseTest {
 
     @AfterClass
     public static void after() throws Exception {
-        BaseTest.after(DriverType.APPIUM);
+        StaticRouter.after(DriverType.APPIUM);
         AgentService.tearDown(agents);
         agentStates.clear();
         agents.clear();

@@ -54,7 +54,7 @@ public class AppiumTest extends BaseTest {
 
     @After
     public void tearDown() throws Exception {
-        super.tearDown(DriverType.APPIUM);
+        super.getRouter().tearDown(DriverType.APPIUM);
     }
 
     @AfterClass

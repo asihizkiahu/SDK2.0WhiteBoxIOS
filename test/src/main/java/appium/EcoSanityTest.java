@@ -36,7 +36,7 @@ public class EcoSanityTest extends BaseTest {
 
     @BeforeClass
     public static void before() throws Exception {
-        BaseTest.before(AppiumDrivers.ANDROID, ConfigItemsRouter.ConfigType.LECreate, TEST_DIR);
+        StaticRouter.before(AppiumDrivers.ANDROID, ConfigItemsRouter.ConfigType.LECreate, TEST_DIR);
         settingsActivator.connectToAccount(SITE_ID);
         infoActivator.setSkill("aaaa", "mobile");
         initAgentService();
@@ -44,7 +44,7 @@ public class EcoSanityTest extends BaseTest {
 
     @Before
     public void setUp() throws Exception {
-        super.setUp();
+        super.getRouter().setUp();
         chatService.startAndValidateChat(service, repsState, agentStates, agents.get(1));
     }
 
@@ -81,7 +81,7 @@ public class EcoSanityTest extends BaseTest {
             chatService.verifySkillRemainLegual(SITE_ID + "\\mobile");
         }
         finally {
-            BaseTest.after(DriverType.APPIUM);
+            StaticRouter.after(DriverType.APPIUM);
             AgentService.tearDown(agents);
             agentStates.clear();
             agents.clear();

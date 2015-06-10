@@ -34,7 +34,7 @@ public class ChatHangoutTest extends BaseTest {
 
     @BeforeClass
     public static void before() throws Exception {
-        BaseTest.before(AppiumDrivers.ANDROID, ConfigItemsRouter.ConfigType.LECreate, TEST_DIR);
+        StaticRouter.before(AppiumDrivers.ANDROID, ConfigItemsRouter.ConfigType.LECreate, TEST_DIR);
         settingsActivator.connectToAccount(SITE_ID);
         infoActivator.setSkill("aaaa", "mobile");
         initAgentService();
@@ -42,7 +42,7 @@ public class ChatHangoutTest extends BaseTest {
 
     @Before
     public void setUp() throws Exception {
-        super.setUp();
+        super.getRouter().setUp();
     }
 
     private static void initAgentService(){
@@ -57,7 +57,7 @@ public class ChatHangoutTest extends BaseTest {
 
     @Test
     public void endSessionByVisitor() throws Exception {
-        super.startChat(service, chatService, repsState, agentStates, agents.get(0));
+        super.getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
         chatService.handleMessagesFlow(service, "a", "a", false, "");
         chatService.ensSession(service, agents.get(0));
         chatService.verifyIsInEngagementPage();
@@ -65,7 +65,7 @@ public class ChatHangoutTest extends BaseTest {
 
     @Test
     public void endChatByAgent() throws Exception {
-        super.startChat(service, chatService, repsState, agentStates, agents.get(0));
+        super.getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
         chatService.handleMessagesFlow(service, "a", "a", false, "");
         service.endChat(agents.get(0));
         chatService.setIsChatStarted(false);
@@ -78,7 +78,7 @@ public class ChatHangoutTest extends BaseTest {
 
     @AfterClass
     public static void after() throws Exception {
-        BaseTest.after(DriverType.APPIUM);
+        StaticRouter.after(DriverType.APPIUM);
         AgentService.tearDown(agents);
     }
 
