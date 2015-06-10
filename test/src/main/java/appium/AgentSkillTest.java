@@ -1,5 +1,6 @@
 package appium;
 
+import appium.output.AgentSkillTestOutput;
 import com.agent.AgentService;
 import com.config.base.ConfigItemsRouter;
 import com.liveperson.AgentState;
@@ -8,6 +9,7 @@ import com.service.activate.echo_test.InfoActivator;
 import com.service.activate.echo_test.SettingsActivator;
 import com.service.validate.echo_test.ChatService;
 import com.ui.service.drivers.AppiumDrivers;
+import org.apache.log4j.Logger;
 import org.junit.*;
 
 import java.util.ArrayList;
@@ -32,14 +34,17 @@ public class AgentSkillTest extends BaseTest {
     private static List<Rep> repsState = new ArrayList<Rep>();
     private static List<AgentState> agentStates = new ArrayList<AgentState>();
     private static AgentService service = AgentService.getInstance();
-
-//    static {
-//        agents = service.setup(TEST_DIR);
-//    }
+    private static final Logger logger = Logger.getLogger(AgentSkillTest.class);
 
     @BeforeClass
     public static void before() throws Exception {
-        BaseTest.before(AppiumDrivers.ANDROID, ConfigItemsRouter.ConfigType.LECreate, TEST_DIR);
+//        logger.info(AgentSkillTestOutput.testClassDesc()); // move to base
+        BaseTest.before(
+                AppiumDrivers.ANDROID,
+                ConfigItemsRouter.ConfigType.LECreate,
+                TEST_DIR,
+                AgentSkillTestOutput.class
+        );
         settingsActivator.connectToAccount(SITE_ID);
         initAgentService();
     }

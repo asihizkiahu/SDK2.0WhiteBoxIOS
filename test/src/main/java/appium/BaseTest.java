@@ -15,6 +15,7 @@ import com.util.properties.PropertiesHandlerImpl;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Properties;
 
@@ -23,7 +24,11 @@ public class BaseTest  {
 
     private static final String ENV_PROP_FILE_PATH = "/environment/env.properties";
     private static final String LOG4J_PROP_FILE_PATH_KEY_VALUE = "Log4jPropFilePath";
+    private static final String OUTPUT_CLASS_DESC_M_NAME = "testClassDesc";
     private static Properties props;
+
+    private static final Logger logger = Logger.getLogger(BaseTest.class);
+
 
     static {
         setProps(PropertiesHandlerImpl.getInstance().parseFromJar(ENV_PROP_FILE_PATH));
@@ -37,6 +42,15 @@ public class BaseTest  {
         if(confType != null) {
 //            ConfigItemsRouter.getInstance().routeAction(confType, testPath);
         }
+    }
+
+    public static void before(AppiumDrivers driver, ConfigItemsRouter.ConfigType confType, String testPath, Class outputClazz) throws Exception {
+        generateTestClassOutput(outputClazz);
+        service.setDriver(driver, testPath);
+        if(confType != null) {
+//            ConfigItemsRouter.getInstance().routeAction(confType, testPath);
+        }
+
     }
 
     protected void setUp() throws Exception {
@@ -87,6 +101,23 @@ public class BaseTest  {
         );
         PropertyConfigurator.configure(url);
     }
+
+    private static <T> void generateTestClassOutput(Class<T> outputClazz){ // logger.info(AgentSkillTestOutput.testClassDesc()); // move to base
+        try {
+            logger.info(outputClazz.getDeclaredMethod(OUTPUT_CLASS_DESC_M_NAME).invoke(null));
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        }
+
+    }
+//
+//    private void generateTestMethodOutput(T outputClass, M outputTestMethod){
+//        // reflect
+//    }
 
     public enum DriverType{
         SELENIUM, APPIUM;
