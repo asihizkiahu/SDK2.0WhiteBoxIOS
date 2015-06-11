@@ -16,6 +16,7 @@ import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Properties;
 
@@ -25,6 +26,7 @@ public class BaseTest  {
     private static final String ENV_PROP_FILE_PATH = "/environment/env.properties";
     private static final String LOG4J_PROP_FILE_PATH_KEY_VALUE = "Log4jPropFilePath";
     private static final String OUTPUT_CLASS_DESC_M_NAME = "testClassDesc";
+    protected static final String OUTPUT_METHOD_POSTFIX = "Desc";
 
     private static StaticRouter staticRouter = new StaticRouter();
     private Router router = new Router();
@@ -42,6 +44,7 @@ public class BaseTest  {
     }
 
     protected static AppiumService service = AppiumService.getInstance();
+    protected static Class<?> outputClazz;
 
 
     protected static class StaticRouter{
@@ -121,8 +124,9 @@ public class BaseTest  {
             PropertyConfigurator.configure(url);
         }
 
-        private static <T> void generateTestClassOutput(Class<T> outputClazz) {
+        protected static <T> void generateTestClassOutput(Class<T> _outputClazz) {
             try {
+                outputClazz = _outputClazz;
                 logger.info(outputClazz.getDeclaredMethod(OUTPUT_CLASS_DESC_M_NAME).invoke(null));
             } catch (Throwable t) {
                 GeneralUtils.handleError(
@@ -130,10 +134,17 @@ public class BaseTest  {
                                 + outputClazz.getName() + "failed", t);
             }
         }
-//
-//    private void generateTestMethodOutput(T outputClass, M outputTestMethod){
-//        // reflect
-//    }
+
+        protected void generateTestMethodOutput(String testName){
+            try {
+                Method outputMethodName = outputClazz.getMethod(testName + OUTPUT_METHOD_POSTFIX, new Class[]{String.class});
+                logger.info(outputMethodName.invoke(outputClazz, testName));
+            } catch (Throwable t) {
+                GeneralUtils.handleError(
+                        "Invoke method in class output for generate test description, in output class "
+                                + outputClazz.getName() + "failed", t);
+            }
+        }
 
     }
 

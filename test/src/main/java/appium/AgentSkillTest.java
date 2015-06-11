@@ -11,6 +11,7 @@ import com.service.validate.echo_test.ChatService;
 import com.ui.service.drivers.AppiumDrivers;
 import org.apache.log4j.Logger;
 import org.junit.*;
+import org.junit.rules.TestName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,8 @@ public class AgentSkillTest extends BaseTest {
     private static AgentService service = AgentService.getInstance();
     private static final Logger logger = Logger.getLogger(AgentSkillTest.class);
 
+
+    @Rule public TestName name = new TestName();
     @BeforeClass
     public static void before() throws Exception {
         StaticRouter.before(
@@ -51,6 +54,7 @@ public class AgentSkillTest extends BaseTest {
     @Before
     public void setUp() throws Exception {
         super.getRouter().setUp();
+        getLogging().generateTestMethodOutput(name.getMethodName());
     }
 
     private static void initAgentService(){
