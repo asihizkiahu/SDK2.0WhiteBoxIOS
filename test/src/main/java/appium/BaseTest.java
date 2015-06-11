@@ -129,20 +129,18 @@ public class BaseTest  {
                 outputClazz = _outputClazz;
                 logger.info(outputClazz.getDeclaredMethod(OUTPUT_CLASS_DESC_M_NAME).invoke(null));
             } catch (Throwable t) {
-                GeneralUtils.handleError(
-                        "Invoke method in class output for generate test description, in output class "
-                                + outputClazz.getName() + "failed", t);
+                GeneralUtils.handleError("Invoke method in class output for generate test description, in output class "
+                        + outputClazz.getName() + "failed", t);
             }
         }
 
         protected void generateTestMethodOutput(String testName){
             try {
-                Method outputMethodName = outputClazz.getMethod(testName + OUTPUT_METHOD_POSTFIX, new Class[]{String.class});
+                Method outputMethodName = outputClazz.getMethod(testName + OUTPUT_METHOD_POSTFIX, String.class);
                 logger.info(outputMethodName.invoke(outputClazz, testName));
             } catch (Throwable t) {
-                GeneralUtils.handleError(
-                        "Invoke method in class output for generate test description, in output class "
-                                + outputClazz.getName() + "failed", t);
+                GeneralUtils.handleError("Invoke method in class output for generate test description, in output method "
+                         + outputClazz.getName() + "failed" + " in test " + testName, t);
             }
         }
 
