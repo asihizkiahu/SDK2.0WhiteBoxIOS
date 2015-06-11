@@ -42,6 +42,8 @@ public class ChatHangoutTest extends BaseTest {
                 TEST_DIR,
                 ChatHangoutTestOutput.class
         );
+        settingsActivator.connectToAccount(SITE_ID);
+        infoActivator.setSkill("aaa", "mobile");
         initAgentService();
     }
 
@@ -58,7 +60,7 @@ public class ChatHangoutTest extends BaseTest {
 
     @Test
     public void endSessionByVisitor() throws Exception {
-        super.getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
+        getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
         chatService.handleMessagesFlow(service, "a", "a", false, "");
         chatService.ensSession(service, agents.get(0));
         chatService.verifyIsInEngagementPage();
@@ -66,7 +68,7 @@ public class ChatHangoutTest extends BaseTest {
 
     @Test
     public void endChatByAgent() throws Exception {
-        super.getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
+        getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
         chatService.handleMessagesFlow(service, "a", "a", false, "");
         service.endChat(agents.get(0));
         chatService.setIsChatStarted(false);

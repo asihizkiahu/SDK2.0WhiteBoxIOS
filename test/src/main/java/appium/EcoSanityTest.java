@@ -44,6 +44,8 @@ public class EcoSanityTest extends BaseTest {
                 TEST_DIR,
                 EcoSanityTestOutput.class
         );
+        settingsActivator.connectToAccount(SITE_ID);
+        infoActivator.setSkill("aaa", "mobile");
         initAgentService();
     }
 

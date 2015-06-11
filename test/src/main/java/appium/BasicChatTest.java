@@ -46,6 +46,8 @@ public class BasicChatTest extends BaseTest {
                 TEST_DIR,
                 BasicChatTestOutput.class
         );
+        settingsActivator.connectToAccount(SITE_ID);
+        infoActivator.setSkill("aaa", "mobile");
         initAgentService();
     }
 
@@ -62,30 +64,30 @@ public class BasicChatTest extends BaseTest {
 
     @Test
     public void sendBidirectionalMsgTest() throws Exception {
-        super.getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
+        getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
 
         chatService.handleMessagesFlow(service, visitorMsg, agentMsg, false, "");
         chatService.handleMessagesFlow(service, "aaa", "bbb", false, "");
 
-        super.getChatActivity().closeChat(service, chatService, agents.get(0));
+        getChatActivity().closeChat(service, chatService, agents.get(0));
     }
 
     @Test
     public void sendLongMessagesTest() throws Exception {
-        super.getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
+        getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
         chatService.handleMessagesFlow(service, visitorLongMsg, agentLongMsg, false, "");
-        super.getChatActivity().closeChat(service, chatService, agents.get(0));
+        getChatActivity().closeChat(service, chatService, agents.get(0));
     }
 
     @Test
     public void sendMessagesWithSpecialCharactersTest() throws Exception {
-        super.getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
+        getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
         StringBuilder asciiChars = new StringBuilder();
         for(int index = 32; index <= 125; index++){
             asciiChars.append(String.valueOf(Character.toChars(index)));
         }
         chatService.handleMessagesFlow(service, asciiChars.toString(), "1234567890", false, "");
-        super.getChatActivity().closeChat(service, chatService, agents.get(0));
+        getChatActivity().closeChat(service, chatService, agents.get(0));
     }
 
     @After

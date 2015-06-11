@@ -9,6 +9,7 @@
 package appium.output;
 
 import appium.AgentSkillTest;
+import appium.EcoSanityTest;
 import com.util.log.OutputGenerator;
 
 import java.util.Arrays;
@@ -47,26 +48,24 @@ public class EcoSanityTestOutput {
 	public static String testClassDesc(){
 		StringBuilder desc = new StringBuilder();
 		desc.append("Performs agent - skill variations tests").append("\n");
-		return OutputGenerator.createGenericClassDesc(AgentSkillTest.class, desc);
+		return OutputGenerator.createGenericClassDesc(EcoSanityTest.class, desc);
 	}
 
-	public static String chatWithAgentBySkillTestDesc(String testName){
+	public static String sanityTestDesc(String testName){
 		List<String> flowDesc = Arrays.asList(
 				"Open app",
-				"Set skill A in app",
+				"Set skill in app",
 				"Click on engagement",
-				"Verify ‘agent is ready for chat’ appears in the top of the page (the skill A agent)",
+				"Verify ‘agent is ready for chat’ appears in the top of the page",
 				"Send msg to agent",
-				"Verify msg arrived to the skill A agent",
-				"Send msg from agent and verify in chat the correct agent A appears",
-				"Set skill B in app",
-				"Click on engagement",
-				"Verify ‘agent is ready for chat’ appears in the top of the page (the skill B agent)",
-				"Send msg to agent",
-				"Verify msg arrived to the skill B agent",
-				"Send msg from agent and verify in chat the correct agent B appears");
+				"Verify msg arrived to the agent",
+				"Send msg to visitor",
+				"Verify msg arrived to the visitor",
+				"End session",
+				"Set illegal skill",
+				"Verify skill remains the legal skill");
 		StringBuilder desc = new StringBuilder();
-		return OutputGenerator.createGenericMethodDesc(AgentSkillTest.class.getName(), testName, desc, flowDesc);
+		return OutputGenerator.createGenericMethodDesc(EcoSanityTest.class.getName(), testName, desc, flowDesc);
 	}
 	
 }

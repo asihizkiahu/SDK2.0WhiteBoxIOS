@@ -9,6 +9,7 @@
 package appium.output;
 
 import appium.AgentSkillTest;
+import appium.ChatHangoutTest;
 import com.util.log.OutputGenerator;
 
 import java.util.Arrays;
@@ -47,26 +48,35 @@ public class ChatHangoutTestOutput {
 	public static String testClassDesc(){
 		StringBuilder desc = new StringBuilder();
 		desc.append("Performs agent - skill variations tests").append("\n");
-		return OutputGenerator.createGenericClassDesc(AgentSkillTest.class, desc);
+		return OutputGenerator.createGenericClassDesc(ChatHangoutTest.class, desc);
 	}
 
-	public static String chatWithAgentBySkillTestDesc(String testName){
+	public static String endSessionByVisitorDesc(String testName){
 		List<String> flowDesc = Arrays.asList(
 				"Open app",
-				"Set skill A in app",
 				"Click on engagement",
-				"Verify ‘agent is ready for chat’ appears in the top of the page (the skill A agent)",
+				"Verify ‘agent is ready for chat’ appears in the top of the page",
 				"Send msg to agent",
-				"Verify msg arrived to the skill A agent",
-				"Send msg from agent and verify in chat the correct agent A appears",
-				"Set skill B in app",
-				"Click on engagement",
-				"Verify ‘agent is ready for chat’ appears in the top of the page (the skill B agent)",
-				"Send msg to agent",
-				"Verify msg arrived to the skill B agent",
-				"Send msg from agent and verify in chat the correct agent B appears");
+				"Verify msg arrived to agent",
+				"Click end session",
+				"Verify chat has ended in agent",
+				"Verify test app left chat page");
 		StringBuilder desc = new StringBuilder();
-		return OutputGenerator.createGenericMethodDesc(AgentSkillTest.class.getName(), testName, desc, flowDesc);
+		return OutputGenerator.createGenericMethodDesc(ChatHangoutTest.class.getName(), testName, desc, flowDesc);
+	}
+
+	public static String endChatByAgentDesc(String testName){
+		List<String> flowDesc = Arrays.asList(
+				"Open app",
+				"Click on engagement",
+				"Verify ‘agent is ready for chat’ appears in the top of the page",
+				"Send msg to agent",
+				"Verify msg arrived to agent",
+				"Click terminate chat from agent",
+				"Verify verification alert",
+				"Verify test app left chat");
+		StringBuilder desc = new StringBuilder();
+		return OutputGenerator.createGenericMethodDesc(ChatHangoutTest.class.getName(), testName, desc, flowDesc);
 	}
 	
 }
