@@ -53,10 +53,20 @@ public class AgentSkillTestOutput {
 	}
 
 	public static String chatWithAgentBySkillTestDesc(String testName){
-		List<String> flowDesc = Arrays.asList("Go to home page", 
-				"Click How To Get Reports Link",
-				"Verify URL output", 
-				"Verify text in page output");
+		List<String> flowDesc = Arrays.asList(
+				"Open app",
+				"Set skill A in app",
+				"Click on engagement",
+				"Verify ‘agent is ready for chat’ appears in the top of the page (the skill A agent)",
+				"Send msg to agent",
+				"Verify msg arrived to the skill A agent",
+				"Send msg from agent and verify in chat the correct agent A appears",
+				"Set skill B in app",
+				"Click on engagement",
+				"Verify ‘agent is ready for chat’ appears in the top of the page (the skill B agent)",
+				"Send msg to agent",
+				"Verify msg arrived to the skill B agent",
+				"Send msg from agent and verify in chat the correct agent B appears");
 		StringBuilder desc = new StringBuilder();
 		return OutputGenerator.createGenericMethodDesc(AgentSkillTest.class.getName(), testName, desc, flowDesc);
 	}
