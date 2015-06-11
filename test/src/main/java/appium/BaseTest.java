@@ -1,7 +1,6 @@
 
 package appium;
 
-
 import com.agent.AgentService;
 import com.config.base.ConfigItemsRouter;
 import com.liveperson.AgentState;
@@ -14,11 +13,15 @@ import com.util.genutil.GeneralUtils;
 import com.util.properties.PropertiesHandlerImpl;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import org.junit.Rule;
+import org.junit.rules.TestName;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
+import static com.liveperson.AgentState.Online;
 
 
 public class BaseTest  {
@@ -30,7 +33,7 @@ public class BaseTest  {
 
     private static StaticRouter staticRouter = new StaticRouter();
     private Router router = new Router();
-    private ChatActivity chatActivity = new ChatActivity();
+    private static ChatActivity chatActivity = new ChatActivity();
     private static Logging logging = new Logging();
 
     private static Properties props;
@@ -45,6 +48,9 @@ public class BaseTest  {
 
     protected static AppiumService service = AppiumService.getInstance();
     protected static Class<?> outputClazz;
+
+    @Rule
+    public TestName name = new TestName();
 
 
     protected static class StaticRouter{
@@ -90,7 +96,7 @@ public class BaseTest  {
         }
     }
 
-    protected class ChatActivity {
+    protected static class ChatActivity {
 
         protected void changeAgentState(List<AgentState> agentStates, int agentLocation, AgentState stateToChange) {
             agentStates.set(agentLocation, stateToChange);
@@ -111,6 +117,14 @@ public class BaseTest  {
                 GeneralUtils.handleError("Error while starting chat", e);
             }
         }
+
+        protected static void initAgentLoginState(int numberOfAgents, List<Rep> agents, List<Rep> repsState, List<AgentState> agentStates){
+            for(int i = 0; i < numberOfAgents; i++){
+                repsState.add(agents.get(i));
+                agentStates.add(Online);
+            }
+        }
+
 
     }
 
@@ -166,7 +180,7 @@ public class BaseTest  {
         return staticRouter;
     }
 
-    protected ChatActivity getChatActivity() {
+    protected static ChatActivity getChatActivity() {
         return chatActivity;
     }
 

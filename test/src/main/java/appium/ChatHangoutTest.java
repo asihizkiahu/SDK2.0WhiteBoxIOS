@@ -1,5 +1,7 @@
 package appium;
 
+import appium.output.AgentSkillTestOutput;
+import appium.output.ChatHangoutTestOutput;
 import com.agent.AgentService;
 import com.config.base.ConfigItemsRouter;
 import com.liveperson.AgentState;
@@ -34,25 +36,24 @@ public class ChatHangoutTest extends BaseTest {
 
     @BeforeClass
     public static void before() throws Exception {
-        StaticRouter.before(AppiumDrivers.ANDROID, ConfigItemsRouter.ConfigType.LECreate, TEST_DIR);
-        settingsActivator.connectToAccount(SITE_ID);
-        infoActivator.setSkill("aaaa", "mobile");
+        StaticRouter.before(
+                AppiumDrivers.ANDROID,
+                ConfigItemsRouter.ConfigType.LECreate,
+                TEST_DIR,
+                ChatHangoutTestOutput.class
+        );
         initAgentService();
     }
 
     @Before
     public void setUp() throws Exception {
         super.getRouter().setUp();
+        getLogging().generateTestMethodOutput(name.getMethodName());
     }
 
     private static void initAgentService(){
         agents = service.setup(TEST_DIR);
-        initAgentLoginState();
-    }
-
-    private static void initAgentLoginState(){
-        repsState.add(agents.get(0));
-        agentStates.add(Online);
+        ChatActivity.initAgentLoginState(1, agents, repsState, agentStates);
     }
 
     @Test

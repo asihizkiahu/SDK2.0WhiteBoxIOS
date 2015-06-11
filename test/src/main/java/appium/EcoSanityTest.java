@@ -1,5 +1,7 @@
 package appium;
 
+import appium.output.AgentSkillTestOutput;
+import appium.output.EcoSanityTestOutput;
 import com.agent.AgentService;
 import com.config.base.ConfigItemsRouter;
 import com.liveperson.AgentState;
@@ -36,9 +38,12 @@ public class EcoSanityTest extends BaseTest {
 
     @BeforeClass
     public static void before() throws Exception {
-        StaticRouter.before(AppiumDrivers.ANDROID, ConfigItemsRouter.ConfigType.LECreate, TEST_DIR);
-        settingsActivator.connectToAccount(SITE_ID);
-        infoActivator.setSkill("aaaa", "mobile");
+        StaticRouter.before(
+                AppiumDrivers.ANDROID,
+                ConfigItemsRouter.ConfigType.LECreate,
+                TEST_DIR,
+                EcoSanityTestOutput.class
+        );
         initAgentService();
     }
 
@@ -46,18 +51,12 @@ public class EcoSanityTest extends BaseTest {
     public void setUp() throws Exception {
         super.getRouter().setUp();
         chatService.startAndValidateChat(service, repsState, agentStates, agents.get(1));
+        getLogging().generateTestMethodOutput(name.getMethodName());
     }
 
     private static void initAgentService(){
         agents = service.setup(TEST_DIR);
-        initAgentLoginState();
-    }
-
-    private static void initAgentLoginState(){
-        repsState.add(agents.get(0));
-        repsState.add(agents.get(1));
-        agentStates.add(Online);
-        agentStates.add(Online);
+        ChatActivity.initAgentLoginState(2, agents, repsState, agentStates);
     }
 
     @Test

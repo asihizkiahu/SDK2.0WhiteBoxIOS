@@ -38,7 +38,6 @@ public class AgentSkillTest extends BaseTest {
     private static final Logger logger = Logger.getLogger(AgentSkillTest.class);
 
 
-    @Rule public TestName name = new TestName();
     @BeforeClass
     public static void before() throws Exception {
         StaticRouter.before(
@@ -59,14 +58,7 @@ public class AgentSkillTest extends BaseTest {
 
     private static void initAgentService(){
         agents = service.setup(TEST_DIR);
-        initAgentLoginState();
-    }
-
-    private static void initAgentLoginState(){
-        repsState.add(agents.get(0));
-        repsState.add(agents.get(1));
-        agentStates.add(Online);
-        agentStates.add(Online);
+        ChatActivity.initAgentLoginState(2, agents, repsState, agentStates);
     }
 
     @Test
