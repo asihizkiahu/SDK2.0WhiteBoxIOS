@@ -53,7 +53,6 @@ public class EcoSanityTest extends BaseTest {
     public void setUp() throws Exception {
         super.getRouter().setUp();
         chatService.startAndValidateChat(service, repsState, agentStates, agents.get(1));
-        getLogging().generateTestMethodOutput(name.getMethodName());
     }
 
     private static void initAgentService(){
@@ -64,7 +63,6 @@ public class EcoSanityTest extends BaseTest {
     @Test
     public void sanityTest() throws Exception {
         chatService.handleMessagesFlow(service, visitorMsg, agentMsg, false, "");
-
     }
 
     @After

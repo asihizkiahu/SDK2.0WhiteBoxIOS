@@ -54,7 +54,6 @@ public class BasicChatTest extends BaseTest {
     @Before
     public void setUp() throws Exception {
         super.getRouter().setUp();
-        getLogging().generateTestMethodOutput(name.getMethodName());
     }
 
     private static void initAgentService(){

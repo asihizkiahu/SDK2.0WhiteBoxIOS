@@ -84,7 +84,7 @@ public class BaseTest  {
 
         protected void setUp() throws Exception {
             logging.configureLog4J();
-
+            getLogging().generateTestMethodOutput(name.getMethodName());
         }
 
         protected void tearDown(DriverType driver) throws Exception {
