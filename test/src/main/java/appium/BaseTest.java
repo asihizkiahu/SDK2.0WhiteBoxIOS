@@ -68,7 +68,7 @@ public class BaseTest  {
             if(confType != null) {
 //            ConfigItemsRouter.getInstance().routeAction(confType, testPath);
             }
-            Logging.generateTestClassOutput((outputObj));
+            Logging.generateTestClassOutput(outputObj);
         }
 
         protected static void after(DriverType driver) throws Exception {
