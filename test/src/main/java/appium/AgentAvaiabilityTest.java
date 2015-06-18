@@ -1,6 +1,6 @@
 package appium;
 
-import appium.output.AgentSkillTestOutput;
+import appium.output.AgentAvaiabilityTestOutput;
 import com.agent.AgentService;
 import com.config.base.ConfigItemsRouter;
 import com.liveperson.AgentState;
@@ -19,9 +19,9 @@ import java.util.List;
  * Created by asih on 18/03/2015.
  *
  */
-public class AgentSkillTest extends BaseTest {
+public class AgentAvaiabilityTest extends BaseTest {
 
-    private static final String TEST_DIR = "./src/main/resources/agent_skill_tests/";
+    private static final String TEST_DIR = "./src/main/resources/agent_availability_tests/";
     private static final String SITE_ID = "89961346";
 
     private static SettingsActivator settingsActivator = SettingsActivator.getInstance();
@@ -41,9 +41,10 @@ public class AgentSkillTest extends BaseTest {
                 AppiumDrivers.ANDROID,
                 ConfigItemsRouter.ConfigType.LECreate,
                 TEST_DIR,
-                AgentSkillTestOutput.class
+                AgentAvaiabilityTestOutput.class
         );
         settingsActivator.connectToAccount(SITE_ID);
+        infoActivator.setSkill("", Constants.SKILL);
         initAgentService();
     }
 
@@ -58,18 +59,27 @@ public class AgentSkillTest extends BaseTest {
     }
 
     @Test
-    public void chatWithAgentBySkillTest() throws Exception {
-        chatWithAgentBySkillTest(AgentSkillData.AGENT_A);
+    public void AgentAvailabilityOnlineOfflineTest() throws Exception {
         chatWithAgentBySkillTest(AgentSkillData.AGENT_B);
+        getChatActivity().changeAgentStateWithRange(
+                agentStates,
+                AgentSkillData.AGENT_A.agentLocation,
+                AgentSkillData.AGENT_B.agentLocation,
+                AgentState.Offline
+        );
+        chatWithAgentBySkillTest(AgentSkillData.AGENT_A);
     }
 
     public void chatWithAgentBySkillTest(AgentSkillData agentSkillData) {
         try {
-            infoActivator.setSkill("", agentSkillData.skill);
             chatService.startAndValidateChat(service, repsState, agentStates, agents.get(agentSkillData.agentLocation));
-            chatService.handleMsgFlow(service, "aaa", agentSkillData.msg, true, agentSkillData.nickName, 3500);
-            chatService.closeChat(service, agents.get(agentSkillData.agentLocation));
-            chatService.verifySkillRemainLegual(SITE_ID + "\\" + agentSkillData.skill);
+            chatService.handleMsgFlow(service, "aaa", agentSkillData.msg, true, agentSkillData.nickName, 5000);
+            if(agentSkillData == AgentSkillData.AGENT_B) {
+                chatService.closeChat(service, agents.get(agentSkillData.agentLocation));
+            }else{
+                Assert.assertFalse("", chatService.isSystemMsgAppearInTop("Agents are standing by...", 5000));
+
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -77,16 +87,14 @@ public class AgentSkillTest extends BaseTest {
 
     private enum AgentSkillData{
 
-        AGENT_A (Constants.AGENT_A_SKILL, Constants.AGENT_A_NICK_NAME, Constants.AGENT_A_MSG, 0),
-        AGENT_B (Constants.AGENT_B_SKILL, Constants.AGENT_B_NICK_NAME, Constants.AGENT_B_MSG, 1);
+        AGENT_A (Constants.AGENT_A_NICK_NAME, Constants.AGENT_A_MSG, 0),
+        AGENT_B (Constants.AGENT_B_NICK_NAME, Constants.AGENT_B_MSG, 1);
 
-        private String skill;
         private String nickName;
         private String msg;
         private int agentLocation;
 
-        AgentSkillData(String skill, String nickName, String msg, int agentLocation){
-            this.skill = skill;
+        AgentSkillData(String nickName, String msg, int agentLocation){
             this.nickName = nickName;
             this.msg = msg;
             this.agentLocation = agentLocation;
@@ -95,11 +103,10 @@ public class AgentSkillTest extends BaseTest {
 
     private static class Constants{
 
-        private static final String AGENT_A_SKILL = "Fashion";
-        private static final String AGENT_B_SKILL = "mobile";
+        private static final String SKILL = "mobile";
         private static final String AGENT_A_NICK_NAME = "Asi Hiz";
         private static final String AGENT_B_NICK_NAME = "Asi the king of agents";
-        private static final String AGENT_A_MSG = "I am agent A, my skill is fashion";
+        private static final String AGENT_A_MSG = "I am agent A, my skill is mobile";
         private static final String AGENT_B_MSG = "I am agent B, my skill is mobile";
     }
 

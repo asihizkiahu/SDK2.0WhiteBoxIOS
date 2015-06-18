@@ -102,6 +102,12 @@ public class BaseTest  {
             agentStates.set(agentLocation, stateToChange);
         }
 
+        protected void changeAgentStateWithRange(List<AgentState> agentStates, int fromLocation, int toLocation, AgentState stateToChange) {
+            for(int i = fromLocation; i <= toLocation; i++){
+                agentStates.set(i, stateToChange);
+            }
+        }
+
         protected void startChat(AgentService service, ChatService chatService, List<Rep> repsState, List<AgentState> agentStates, Rep agent) {
             try {
                 chatService.startAndValidateChat(service, repsState, agentStates, agent);

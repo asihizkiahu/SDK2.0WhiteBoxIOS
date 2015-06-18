@@ -18,7 +18,7 @@ import java.util.List;
  * Created by asih on 18/03/2015.
  *
  */
-public class BasicChatTest extends BaseTest {
+public class SystemMessagesTest extends BaseTest {
 
     private static final String TEST_DIR = "./src/main/resources/basic_chat_tests/";
     private static final String SITE_ID = "89961346";
@@ -32,9 +32,6 @@ public class BasicChatTest extends BaseTest {
     private static AgentService service = AgentService.getInstance();
     private final String visitorMsg = "I need help";
     private final String agentMsg = "Me too";
-    private final String visitorLongMsg = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
-    private final String agentLongMsg = "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb";
-
 
     @BeforeClass
     public static void before() throws Exception {
@@ -60,30 +57,12 @@ public class BasicChatTest extends BaseTest {
     }
 
     @Test
-    public void sendBidirectionalMsgTest() throws Exception {
+    public void systemMessagesTest() throws Exception {
         getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
 
         chatService.handleMsgFlow(service, visitorMsg, agentMsg, false, "", 2500);
         chatService.handleMsgFlow(service, "aaa", "bbb", false, "", 2500);
 
-        getChatActivity().closeChat(service, chatService, agents.get(0));
-    }
-
-    @Test
-    public void sendLongMessagesTest() throws Exception {
-        getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
-        chatService.handleMsgFlow(service, visitorLongMsg, agentLongMsg, false, "", 2500);
-        getChatActivity().closeChat(service, chatService, agents.get(0));
-    }
-
-    @Test
-    public void sendMessagesWithSpecialCharactersTest() throws Exception {
-        getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
-        StringBuilder asciiChars = new StringBuilder();
-        for(int index = 32; index <= 125; index++){
-            asciiChars.append(String.valueOf(Character.toChars(index)));
-        }
-        chatService.handleMsgFlow(service, asciiChars.toString(), "1234567890", false, "", 2500);
         getChatActivity().closeChat(service, chatService, agents.get(0));
     }
 

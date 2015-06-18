@@ -60,8 +60,8 @@ public class BasicChatTestOutput {
 				"Verify msg arrived to agent",
 				"Send msg to visitor",
 				"Verify msg appears in chat");
-		StringBuilder desc = new StringBuilder();
-		return OutputGenerator.createGenericMethodDesc(BasicChatTest.class.getName(), testName, desc, flowDesc);
+
+		return OutputGenerator.createGenericMethodDesc(testName, flowDesc);
 	}
 
 	public static String sendLongMessagesTestDesc(String testName){
@@ -73,8 +73,7 @@ public class BasicChatTestOutput {
 				"Verify long msg arrived to agent",
 				"Send long msg to visitor",
 				"Verify long msg appears in chat");
-		StringBuilder desc = new StringBuilder();
-		return OutputGenerator.createGenericMethodDesc(BasicChatTest.class.getName(), testName, desc, flowDesc);
+		return OutputGenerator.createGenericMethodDesc(testName, flowDesc);
 	}
 
 	public static String sendMessagesWithSpecialCharactersTestDesc(String testName){
@@ -86,8 +85,7 @@ public class BasicChatTestOutput {
 				"Verify with special characters arrived to agent",
 				"Send with special characters to visitor",
 				"Verify with special characters appears in chat");
-		StringBuilder desc = new StringBuilder();
-		return OutputGenerator.createGenericMethodDesc(BasicChatTest.class.getName(), testName, desc, flowDesc);
+		return OutputGenerator.createGenericMethodDesc(testName, flowDesc);
 	}
 	
 }

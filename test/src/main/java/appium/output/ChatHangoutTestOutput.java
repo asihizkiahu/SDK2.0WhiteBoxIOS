@@ -61,8 +61,7 @@ public class ChatHangoutTestOutput {
 				"Click end session",
 				"Verify chat has ended in agent",
 				"Verify test app left chat page");
-		StringBuilder desc = new StringBuilder();
-		return OutputGenerator.createGenericMethodDesc(ChatHangoutTest.class.getName(), testName, desc, flowDesc);
+		return OutputGenerator.createGenericMethodDesc(testName, flowDesc);
 	}
 
 	public static String endChatByAgentDesc(String testName){
@@ -75,8 +74,7 @@ public class ChatHangoutTestOutput {
 				"Click terminate chat from agent",
 				"Verify verification alert",
 				"Verify test app left chat");
-		StringBuilder desc = new StringBuilder();
-		return OutputGenerator.createGenericMethodDesc(ChatHangoutTest.class.getName(), testName, desc, flowDesc);
+		return OutputGenerator.createGenericMethodDesc(testName, flowDesc);
 	}
 	
 }

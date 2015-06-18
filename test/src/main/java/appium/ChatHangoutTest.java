@@ -1,6 +1,5 @@
 package appium;
 
-import appium.output.AgentSkillTestOutput;
 import appium.output.ChatHangoutTestOutput;
 import com.agent.AgentService;
 import com.config.base.ConfigItemsRouter;
@@ -14,8 +13,6 @@ import org.junit.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.liveperson.AgentState.Online;
 
 /**
  * Created by asih on 18/03/2015.
@@ -60,7 +57,7 @@ public class ChatHangoutTest extends BaseTest {
     @Test
     public void endSessionByVisitor() throws Exception {
         getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
-        chatService.handleMessagesFlow(service, "a", "a", false, "");
+        chatService.handleMsgFlow(service, "a", "a", false, "", 2500);
         chatService.ensSession(service, agents.get(0));
         chatService.verifyIsInEngagementPage();
     }
@@ -68,7 +65,7 @@ public class ChatHangoutTest extends BaseTest {
     @Test
     public void endChatByAgent() throws Exception {
         getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
-        chatService.handleMessagesFlow(service, "a", "a", false, "");
+        chatService.handleMsgFlow(service, "a", "a", false, "", 2500);
         service.endChat(agents.get(0));
         chatService.setIsChatStarted(false);
         chatService.dismissSession();

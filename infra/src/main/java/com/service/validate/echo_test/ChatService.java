@@ -12,6 +12,7 @@ import com.service.ReflectivePageFlow;
 import com.service.activate.demo_app.DemoActivator;
 import com.service.activate.echo_test.ChatActivator;
 import com.ui.service.AppiumService;
+import com.util.genutil.GeneralUtils;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 
@@ -50,27 +51,62 @@ public class ChatService {
     }
 
     public void verifySkillRemainLegual(String skill) throws Exception {
-        ReflectivePageFlow.invoke(Menu.class, menu, Arrays.asList(InfraConstants.VALIDATE_IN_PAGE_M_NAME, InfraConstants.PREPARE_ELEMENTS_M_NAME));
+        ReflectivePageFlow.invoke(
+                Menu.class,
+                menu,
+                Arrays.asList(
+                        InfraConstants.VALIDATE_IN_PAGE_M_NAME,
+                        InfraConstants.PREPARE_ELEMENTS_M_NAME
+                )
+        );
         menu.getActivate().enterMenuInfo();
 
-        ReflectivePageFlow.invoke(Info.class, info, Arrays.asList(InfraConstants.VALIDATE_IN_PAGE_M_NAME, InfraConstants.PREPARE_ELEMENTS_M_NAME));
+        ReflectivePageFlow.invoke(
+                Info.class,
+                info,
+                Arrays.asList(
+                        InfraConstants.VALIDATE_IN_PAGE_M_NAME,
+                        InfraConstants.PREPARE_ELEMENTS_M_NAME
+                )
+        );
         info.getValidate().verifySkillRemainLegual(skill);
     }
 
     public void verifyIsInEngagementPage(){
-        ReflectivePageFlow.invoke(Engagement.class, engagement, Arrays.asList(InfraConstants.VALIDATE_IN_PAGE_M_NAME, InfraConstants.PREPARE_ELEMENTS_M_NAME));
+        ReflectivePageFlow.invoke(
+                Engagement.class,
+                engagement,
+                Arrays.asList(
+                        InfraConstants.VALIDATE_IN_PAGE_M_NAME,
+                        InfraConstants.PREPARE_ELEMENTS_M_NAME
+                )
+        );
     }
 
     public boolean isMsgAppearInChat(String msg){
         if(!isChatStarted) {
-            ReflectivePageFlow.invoke(Chat.class, chat, Arrays.asList(InfraConstants.VALIDATE_IN_PAGE_M_NAME, InfraConstants.PREPARE_ELEMENTS_M_NAME));
+            ReflectivePageFlow.invoke(
+                    Chat.class,
+                    chat,
+                    Arrays.asList(
+                            InfraConstants.VALIDATE_IN_PAGE_M_NAME,
+                            InfraConstants.PREPARE_ELEMENTS_M_NAME
+                    )
+            );
         }
         return chat.getValidate().isMsgAppearInChat(msg);
     }
 
     public boolean isSystemMsgAppearInTop(String msg, long timeOutInMilisec){
         if(!isChatStarted) {
-            ReflectivePageFlow.invoke(Chat.class, chat, Arrays.asList(InfraConstants.VALIDATE_IN_PAGE_M_NAME, InfraConstants.PREPARE_ELEMENTS_M_NAME));
+            ReflectivePageFlow.invoke(
+                    Chat.class,
+                    chat,
+                    Arrays.asList(
+                            InfraConstants.VALIDATE_IN_PAGE_M_NAME,
+                            InfraConstants.PREPARE_ELEMENTS_M_NAME
+                    )
+            );
         }
         return chat.getValidate().isSystemMsgAppearInTop(msg, timeOutInMilisec);
     }
@@ -81,7 +117,13 @@ public class ChatService {
     }
 
     public void verifyChatSystemMsg(String msg){
-        Assert.assertTrue("Message Agents are standing by... do not appear in chat", isSystemMsgAppearInTop("Agents are standing by...", 5000));
+        Assert.assertTrue(
+                "Message Agents are standing by... do not appear in chat",
+                isSystemMsgAppearInTop(
+                        "Agents are standing by...",
+                        5000
+                )
+        );
     }
 
     public void startAndValidateChat(AgentService service, List<Rep> repsState, List<AgentState> agentStates, Rep agent) throws Exception {
@@ -91,7 +133,7 @@ public class ChatService {
         verifyChatSystemMsg("Agents are standing by...");
     }
 
-    public void handleMessagesFlow(AgentService service, String visitorMsg, String agentMsg, boolean isCheckSpecificAgent, String repNickName){
+    public void handleMsgFlow(AgentService service, String visitorMsg, String agentMsg, boolean isCheckSpecificAgent, String repNickName, long timeOut){
         try {
             sendMsgByChatStatus(visitorMsg);
         } catch (Exception e) {
@@ -103,13 +145,13 @@ public class ChatService {
             service.prepareAgentForChat(currentAgent);
             isChatStarted = true;
         }
-        handleAgentMsgFlow(service, agentMsg, isCheckSpecificAgent, repNickName);
+        handleAgentMsgFlow(service, agentMsg, isCheckSpecificAgent, repNickName, timeOut);
     }
 
-    private void handleAgentMsgFlow(AgentService service, String agentMsg, boolean isCheckSpecificAgent, String repNickName){
+    private void handleAgentMsgFlow(AgentService service, String agentMsg, boolean isCheckSpecificAgent, String repNickName, long timeOut){
         service.addChatLines(currentAgent, agentMsg);
         try {
-            Thread.sleep(2500);
+            Thread.sleep(timeOut);
         } catch (InterruptedException e) {
             logger.warn("Failed to wait " + e.getMessage());
         }
@@ -131,7 +173,14 @@ public class ChatService {
     }
 
     public void dismissSession() {
-        ReflectivePageFlow.invoke(Chat.class, chat, Arrays.asList(InfraConstants.VALIDATE_IN_PAGE_M_NAME, InfraConstants.PREPARE_ELEMENTS_M_NAME));
+        ReflectivePageFlow.invoke(
+                Chat.class,
+                chat,
+                Arrays.asList(
+                        InfraConstants.VALIDATE_IN_PAGE_M_NAME,
+                        InfraConstants.PREPARE_ELEMENTS_M_NAME
+                )
+        );
         chat.getActivate().dismissSession();
     }
 

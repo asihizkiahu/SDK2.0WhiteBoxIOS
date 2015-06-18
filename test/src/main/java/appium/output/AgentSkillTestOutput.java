@@ -67,8 +67,7 @@ public class AgentSkillTestOutput {
 				"Send msg to agent",
 				"Verify msg arrived to the skill B agent",
 				"Send msg from agent and verify in chat the correct agent B appears");
-		StringBuilder desc = new StringBuilder();
-		return OutputGenerator.createGenericMethodDesc(AgentSkillTest.class.getName(), testName, desc, flowDesc);
+		return OutputGenerator.createGenericMethodDesc(testName, flowDesc);
 	}
 	
 }

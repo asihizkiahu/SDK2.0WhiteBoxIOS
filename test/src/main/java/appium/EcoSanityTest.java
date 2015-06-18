@@ -1,6 +1,5 @@
 package appium;
 
-import appium.output.AgentSkillTestOutput;
 import appium.output.EcoSanityTestOutput;
 import com.agent.AgentService;
 import com.config.base.ConfigItemsRouter;
@@ -14,8 +13,6 @@ import org.junit.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.liveperson.AgentState.Online;
 
 /**
 * Created by asih on 18/03/2015.
@@ -62,7 +59,7 @@ public class EcoSanityTest extends BaseTest {
 
     @Test
     public void sanityTest() throws Exception {
-        chatService.handleMessagesFlow(service, visitorMsg, agentMsg, false, "");
+        chatService.handleMsgFlow(service, visitorMsg, agentMsg, false, "", 2500);
     }
 
     @After
