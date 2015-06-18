@@ -10,6 +10,7 @@ import com.ui.service.AppiumService;
 import com.ui.service.drivers.AppiumDrivers;
 import com.ui.service.drivers.SeleniumDrivers;
 import com.util.genutil.GeneralUtils;
+import com.util.log.OutputService;
 import com.util.properties.PropertiesHandlerImpl;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -28,7 +29,6 @@ public class BaseTest  {
 
     private static final String ENV_PROP_FILE_PATH = "/environment/env.properties";
     private static final String LOG4J_PROP_FILE_PATH_KEY_VALUE = "Log4jPropFilePath";
-    private static final String OUTPUT_CLASS_DESC_M_NAME = "testClassDesc";
     protected static final String OUTPUT_METHOD_POSTFIX = "Desc";
 
     private static StaticRouter staticRouter = new StaticRouter();
@@ -47,7 +47,7 @@ public class BaseTest  {
     }
 
     protected static AppiumService service = AppiumService.getInstance();
-    protected static Class<?> outputClazz;
+    protected static OutputService outputService;
 
     @Rule
     public TestName name = new TestName();
@@ -62,12 +62,13 @@ public class BaseTest  {
             }
         }
 
-        protected static void before(AppiumDrivers driver, ConfigItemsRouter.ConfigType confType, String testPath, Class outputClazz) throws Exception {
+        protected static <T extends OutputService> void before(AppiumDrivers driver, ConfigItemsRouter.ConfigType confType, String testPath, T outputObj) throws Exception {
+            outputService = outputObj;
             service.setDriver(driver, testPath);
             if(confType != null) {
 //            ConfigItemsRouter.getInstance().routeAction(confType, testPath);
             }
-            Logging.generateTestClassOutput(outputClazz);
+            Logging.generateTestClassOutput((outputObj));
         }
 
         protected static void after(DriverType driver) throws Exception {
@@ -144,23 +145,22 @@ public class BaseTest  {
             PropertyConfigurator.configure(url);
         }
 
-        protected static <T> void generateTestClassOutput(Class<T> _outputClazz) {
+        protected static void generateTestClassOutput(OutputService outputObj) {
             try {
-                outputClazz = _outputClazz;
-                logger.info(outputClazz.getDeclaredMethod(OUTPUT_CLASS_DESC_M_NAME).invoke(null));
+                logger.info(outputObj.testClassDesc());
             } catch (Throwable t) {
-                GeneralUtils.handleError("Invoke method in class output for generate test description, in output class "
-                        + outputClazz.getName() + "failed", t);
+                GeneralUtils.handleError("activate method in class output for generate test description, in output class "
+                        + outputObj.getClass().getName() + "failed", t);
             }
         }
 
         protected void generateTestMethodOutput(String testName){
             try {
-                Method outputMethodName = outputClazz.getMethod(testName + OUTPUT_METHOD_POSTFIX, String.class);
-                logger.info(outputMethodName.invoke(outputClazz, testName));
+                Method outputMethodName = outputService.getClass().getMethod(testName + OUTPUT_METHOD_POSTFIX, String.class);
+                logger.info(outputMethodName.invoke(outputService.getClass(), testName));
             } catch (Throwable t) {
                 GeneralUtils.handleError("Invoke method in class output for generate test description, in output method "
-                         + outputClazz.getName() + "failed" + " in test " + testName, t);
+                         + outputService.getClass().getName() + "failed" + " in test " + testName, t);
             }
         }
 

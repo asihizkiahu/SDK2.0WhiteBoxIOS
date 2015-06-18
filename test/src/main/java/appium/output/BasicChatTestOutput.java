@@ -11,41 +11,16 @@ package appium.output;
 import appium.AgentSkillTest;
 import appium.BasicChatTest;
 import com.util.log.OutputGenerator;
+import com.util.log.OutputService;
 
 import java.util.Arrays;
 import java.util.List;
 
 
-public class BasicChatTestOutput {
-
-	class Local{
-
-	}
-
-
-
-	/**
-	 * Private constructor
-	 *
-	 */
-
-	private BasicChatTestOutput(){
-
-
-	}
-
-
-	/**
-	 * Test Class Desc
-	 * 
-	 * Contains the output for the test class description
-
-	 * @version 0.0.1-SNAPSHOT
-	 * @return Output value
-	 */
+public class BasicChatTestOutput implements OutputService {
 
 	
-	public static String testClassDesc(){
+	public String testClassDesc(){
 		StringBuilder desc = new StringBuilder();
 		desc.append("Performs basics chat activities").append("\n");
 		return OutputGenerator.createGenericClassDesc(BasicChatTest.class, desc);

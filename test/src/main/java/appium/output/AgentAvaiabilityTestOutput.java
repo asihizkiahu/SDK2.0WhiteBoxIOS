@@ -11,41 +11,16 @@ package appium.output;
 import appium.AgentAvaiabilityTest;
 import appium.AgentSkillTest;
 import com.util.log.OutputGenerator;
+import com.util.log.OutputService;
 
 import java.util.Arrays;
 import java.util.List;
 
 
-public class AgentAvaiabilityTestOutput {
+public class AgentAvaiabilityTestOutput implements OutputService {
 
-	class Local{
-
-	}
-
-
-
-	/**
-	 * Private constructor
-	 *
-	 */
-
-	private AgentAvaiabilityTestOutput(){
-
-
-	}
-
-
-	/**
-	 * Test Class Desc
-	 * 
-	 * Contains the output for the test class description
-
-	 * @version 0.0.1-SNAPSHOT
-	 * @return Output value
-	 */
-
-	
-	public static String testClassDesc(){
+	@Override
+	public String testClassDesc(){
 		StringBuilder desc = new StringBuilder();
 		desc.append("Performs agent - availability variations tests").append("\n");
 		return OutputGenerator.createGenericClassDesc(AgentAvaiabilityTest.class, desc);

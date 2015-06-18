@@ -150,6 +150,7 @@ public class ChatService {
 
     private void handleAgentMsgFlow(AgentService service, String agentMsg, boolean isCheckSpecificAgent, String repNickName, long timeOut){
         service.addChatLines(currentAgent, agentMsg);
+//        verifyChatSystemMsg("Agent Is Typing");
         try {
             Thread.sleep(timeOut);
         } catch (InterruptedException e) {

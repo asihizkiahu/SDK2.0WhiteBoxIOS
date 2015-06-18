@@ -39,7 +39,7 @@ public class EcoSanityTest extends BaseTest {
                 AppiumDrivers.ANDROID,
                 ConfigItemsRouter.ConfigType.LECreate,
                 TEST_DIR,
-                EcoSanityTestOutput.class
+                new EcoSanityTestOutput()
         );
         settingsActivator.connectToAccount(SITE_ID);
         infoActivator.setSkill("aaa", "mobile");

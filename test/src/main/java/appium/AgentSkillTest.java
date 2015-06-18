@@ -41,7 +41,7 @@ public class AgentSkillTest extends BaseTest {
                 AppiumDrivers.ANDROID,
                 ConfigItemsRouter.ConfigType.LECreate,
                 TEST_DIR,
-                AgentSkillTestOutput.class
+                new AgentSkillTestOutput()
         );
         settingsActivator.connectToAccount(SITE_ID);
         initAgentService();
@@ -67,7 +67,7 @@ public class AgentSkillTest extends BaseTest {
         try {
             infoActivator.setSkill("", agentSkillData.skill);
             chatService.startAndValidateChat(service, repsState, agentStates, agents.get(agentSkillData.agentLocation));
-            chatService.handleMsgFlow(service, "aaa", agentSkillData.msg, true, agentSkillData.nickName, 3500);
+            chatService.handleMsgFlow(service, "aaa", agentSkillData.msg, true, agentSkillData.nickName, 5000);
             chatService.closeChat(service, agents.get(agentSkillData.agentLocation));
             chatService.verifySkillRemainLegual(SITE_ID + "\\" + agentSkillData.skill);
         } catch (Exception e) {

@@ -8,8 +8,8 @@
 
 package appium.output;
 
-import appium.AgentSkillTest;
 import appium.EcoSanityTest;
+import appium.SystemMessagesTest;
 import com.util.log.OutputGenerator;
 import com.util.log.OutputService;
 
@@ -17,16 +17,16 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class EcoSanityTestOutput implements OutputService {
+public class SystemMessagesTestOutput implements OutputService {
 
-	
-	public String testClassDesc(){
+
+	public  String testClassDesc(){
 		StringBuilder desc = new StringBuilder();
-		desc.append("Performs agent - skill variations tests").append("\n");
-		return OutputGenerator.createGenericClassDesc(EcoSanityTest.class, desc);
+		desc.append("Performs system messages verifications in chat page").append("\n");
+		return OutputGenerator.createGenericClassDesc(SystemMessagesTest.class, desc);
 	}
 
-	public static String sanityTestDesc(String testName){
+	public static String systemMessagesTestDesc(String testName){
 		List<String> flowDesc = Arrays.asList(
 				"Open app",
 				"Set skill in app",

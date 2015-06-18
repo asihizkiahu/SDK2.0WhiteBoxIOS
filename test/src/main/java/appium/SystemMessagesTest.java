@@ -1,6 +1,7 @@
 package appium;
 
 import appium.output.BasicChatTestOutput;
+import appium.output.SystemMessagesTestOutput;
 import com.agent.AgentService;
 import com.config.base.ConfigItemsRouter;
 import com.liveperson.AgentState;
@@ -39,7 +40,7 @@ public class SystemMessagesTest extends BaseTest {
                 AppiumDrivers.ANDROID,
                 ConfigItemsRouter.ConfigType.LECreate,
                 TEST_DIR,
-                BasicChatTestOutput.class
+                new SystemMessagesTestOutput()
         );
         settingsActivator.connectToAccount(SITE_ID);
         infoActivator.setSkill("aaa", "mobile");
@@ -58,6 +59,7 @@ public class SystemMessagesTest extends BaseTest {
 
     @Test
     public void systemMessagesTest() throws Exception {
+        // agents are standing by
         getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
 
         chatService.handleMsgFlow(service, visitorMsg, agentMsg, false, "", 2500);

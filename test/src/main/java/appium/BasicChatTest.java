@@ -42,7 +42,7 @@ public class BasicChatTest extends BaseTest {
                 AppiumDrivers.ANDROID,
                 ConfigItemsRouter.ConfigType.LECreate,
                 TEST_DIR,
-                BasicChatTestOutput.class
+                new BasicChatTestOutput()
         );
         settingsActivator.connectToAccount(SITE_ID);
         infoActivator.setSkill("aaa", "mobile");

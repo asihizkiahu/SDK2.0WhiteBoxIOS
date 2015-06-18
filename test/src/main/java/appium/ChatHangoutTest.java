@@ -37,7 +37,7 @@ public class ChatHangoutTest extends BaseTest {
                 AppiumDrivers.ANDROID,
                 ConfigItemsRouter.ConfigType.LECreate,
                 TEST_DIR,
-                ChatHangoutTestOutput.class
+                new ChatHangoutTestOutput()
         );
         settingsActivator.connectToAccount(SITE_ID);
         infoActivator.setSkill("aaa", "mobile");

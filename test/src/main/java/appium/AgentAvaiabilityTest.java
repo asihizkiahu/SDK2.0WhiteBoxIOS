@@ -41,7 +41,7 @@ public class AgentAvaiabilityTest extends BaseTest {
                 AppiumDrivers.ANDROID,
                 ConfigItemsRouter.ConfigType.LECreate,
                 TEST_DIR,
-                AgentAvaiabilityTestOutput.class
+                new AgentAvaiabilityTestOutput()
         );
         settingsActivator.connectToAccount(SITE_ID);
         infoActivator.setSkill("", Constants.SKILL);

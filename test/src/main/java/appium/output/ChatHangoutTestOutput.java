@@ -11,41 +11,16 @@ package appium.output;
 import appium.AgentSkillTest;
 import appium.ChatHangoutTest;
 import com.util.log.OutputGenerator;
+import com.util.log.OutputService;
 
 import java.util.Arrays;
 import java.util.List;
 
 
-public class ChatHangoutTestOutput {
-
-	class Local{
-
-	}
-
-
-
-	/**
-	 * Private constructor
-	 *
-	 */
-
-	private ChatHangoutTestOutput(){
-
-
-	}
-
-
-	/**
-	 * Test Class Desc
-	 * 
-	 * Contains the output for the test class description
-
-	 * @version 0.0.1-SNAPSHOT
-	 * @return Output value
-	 */
+public class ChatHangoutTestOutput implements OutputService {
 
 	
-	public static String testClassDesc(){
+	public String testClassDesc(){
 		StringBuilder desc = new StringBuilder();
 		desc.append("Performs agent - skill variations tests").append("\n");
 		return OutputGenerator.createGenericClassDesc(ChatHangoutTest.class, desc);
