@@ -23,6 +23,8 @@ public class ChatHangoutTest extends BaseTest {
 
     private static final String TEST_DIR = "./src/main/resources/basic_chat_tests/";
     private static final String SITE_ID = "89961346";
+    private static final StringBuilder CLASS_DESC = new StringBuilder("Performs bidirectional chat hang outs");
+
     private static SettingsActivator settingsActivator = SettingsActivator.getInstance();
     private static InfoActivator infoActivator = InfoActivator.getInstance();
 
@@ -38,7 +40,8 @@ public class ChatHangoutTest extends BaseTest {
                 AppiumDrivers.ANDROID,
                 ConfigItemsRouter.ConfigType.LECreate,
                 TEST_DIR,
-                new ChatHangoutTestOutput()
+                ChatHangoutTest.class,
+                CLASS_DESC
         );
         settingsActivator.connectToAccount(SITE_ID);
         infoActivator.setSkill("aaa", "mobile");
