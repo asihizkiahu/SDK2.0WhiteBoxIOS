@@ -25,7 +25,7 @@ import java.util.Properties;
 import static com.liveperson.AgentState.Online;
 
 
-public class BaseTest  {
+public class BaseTest <T extends OutputService> {
 
     private static final String ENV_PROP_FILE_PATH = "/environment/env.properties";
     private static final String LOG4J_PROP_FILE_PATH_KEY_VALUE = "Log4jPropFilePath";
@@ -40,14 +40,13 @@ public class BaseTest  {
 
     private static final Logger logger = Logger.getLogger(BaseTest.class);
 
-
     static {
         setProps(PropertiesHandlerImpl.getInstance().parseFromJar(ENV_PROP_FILE_PATH));
 
     }
 
     protected static AppiumService service = AppiumService.getInstance();
-    protected static OutputService outputService;
+    protected static OutputService outputObj;
 
     @Rule
     public TestName name = new TestName();
@@ -55,15 +54,8 @@ public class BaseTest  {
 
     protected static class StaticRouter{
 
-        protected static void before(AppiumDrivers driver, ConfigItemsRouter.ConfigType confType, String testPath) throws Exception {
-            service.setDriver(driver, testPath);
-            if(confType != null) {
-//            ConfigItemsRouter.getInstance().routeAction(confType, testPath);
-            }
-        }
-
-        protected static <T extends OutputService> void before(AppiumDrivers driver, ConfigItemsRouter.ConfigType confType, String testPath, T outputObj) throws Exception {
-            outputService = outputObj;
+        protected static <T extends OutputService> void before(AppiumDrivers driver, ConfigItemsRouter.ConfigType confType, String testPath, T _outputObj) throws Exception {
+            outputObj = _outputObj;
             service.setDriver(driver, testPath);
             if(confType != null) {
 //            ConfigItemsRouter.getInstance().routeAction(confType, testPath);
@@ -156,11 +148,10 @@ public class BaseTest  {
 
         protected void generateTestMethodOutput(String testName){
             try {
-                Method outputMethodName = outputService.getClass().getMethod(testName + OUTPUT_METHOD_POSTFIX, String.class);
-                logger.info(outputMethodName.invoke(outputService.getClass(), testName));
+                logger.info(outputObj.testMethodDesc(testName));
             } catch (Throwable t) {
                 GeneralUtils.handleError("Invoke method in class output for generate test description, in output method "
-                         + outputService.getClass().getName() + "failed" + " in test " + testName, t);
+                        + outputObj.getClass().getName() + "failed" + " in test " + testName, t);
             }
         }
 

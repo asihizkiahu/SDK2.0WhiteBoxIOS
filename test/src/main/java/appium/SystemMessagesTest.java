@@ -10,6 +10,7 @@ import com.service.activate.echo_test.InfoActivator;
 import com.service.activate.echo_test.SettingsActivator;
 import com.service.validate.echo_test.ChatService;
 import com.ui.service.drivers.AppiumDrivers;
+import com.util.log.TestSteps;
 import org.junit.*;
 
 import java.util.ArrayList;
@@ -58,6 +59,19 @@ public class SystemMessagesTest extends BaseTest {
     }
 
     @Test
+    @TestSteps(steps={
+                "Open app",
+				"Set skill in app",
+				"Click on engagement",
+				"Verify ‘agent is ready for chat’ appears in the top of the page",
+				"Send msg to agent",
+				"Verify msg arrived to the agent",
+				"Send msg to visitor",
+				"Verify msg arrived to the visitor",
+				"End session",
+				"Set illegal skill",
+				"Verify skill remains the legal skill"
+    })
     public void systemMessagesTest() throws Exception {
         // agents are standing by
         getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));

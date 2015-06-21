@@ -8,14 +8,10 @@
 
 package appium.output;
 
-import java.util.Arrays;
-import java.util.List;
 
 import appium.AgentSkillTest;
 import com.util.log.OutputGenerator;
 import com.util.log.OutputService;
-import org.junit.Test;
-import org.openqa.selenium.WebDriver;
 
 
 public class AgentSkillTestOutput implements OutputService {
@@ -27,22 +23,8 @@ public class AgentSkillTestOutput implements OutputService {
 		return OutputGenerator.createGenericClassDesc(AgentSkillTest.class, desc);
 	}
 
-	public static String chatWithAgentBySkillTestDesc(String testName){
-		List<String> flowDesc = Arrays.asList(
-				"Open app",
-				"Set skill A in app",
-				"Click on engagement",
-				"Verify ‘agent is ready for chat’ appears in the top of the page (the skill A agent)",
-				"Send msg to agent",
-				"Verify msg arrived to the skill A agent",
-				"Send msg from agent and verify in chat the correct agent A appears",
-				"Set skill B in app",
-				"Click on engagement",
-				"Verify ‘agent is ready for chat’ appears in the top of the page (the skill B agent)",
-				"Send msg to agent",
-				"Verify msg arrived to the skill B agent",
-				"Send msg from agent and verify in chat the correct agent B appears");
-		return OutputGenerator.createGenericMethodDesc(testName, flowDesc);
+	@Override
+	public String testMethodDesc(String testName) {
+		return OutputGenerator.createGenericMethodDesc(testName);
 	}
-	
 }

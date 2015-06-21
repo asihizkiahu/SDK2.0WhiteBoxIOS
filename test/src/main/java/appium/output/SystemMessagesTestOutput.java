@@ -8,13 +8,9 @@
 
 package appium.output;
 
-import appium.EcoSanityTest;
 import appium.SystemMessagesTest;
 import com.util.log.OutputGenerator;
 import com.util.log.OutputService;
-
-import java.util.Arrays;
-import java.util.List;
 
 
 public class SystemMessagesTestOutput implements OutputService {
@@ -26,20 +22,9 @@ public class SystemMessagesTestOutput implements OutputService {
 		return OutputGenerator.createGenericClassDesc(SystemMessagesTest.class, desc);
 	}
 
-	public static String systemMessagesTestDesc(String testName){
-		List<String> flowDesc = Arrays.asList(
-				"Open app",
-				"Set skill in app",
-				"Click on engagement",
-				"Verify ‘agent is ready for chat’ appears in the top of the page",
-				"Send msg to agent",
-				"Verify msg arrived to the agent",
-				"Send msg to visitor",
-				"Verify msg arrived to the visitor",
-				"End session",
-				"Set illegal skill",
-				"Verify skill remains the legal skill");
-		return OutputGenerator.createGenericMethodDesc(testName, flowDesc);
+	@Override
+	public String testMethodDesc(String testName) {
+		return OutputGenerator.createGenericMethodDesc(testName);
 	}
 	
 }

@@ -9,6 +9,7 @@ import com.service.activate.echo_test.InfoActivator;
 import com.service.activate.echo_test.SettingsActivator;
 import com.service.validate.echo_test.ChatService;
 import com.ui.service.drivers.AppiumDrivers;
+import com.util.log.TestSteps;
 import org.junit.*;
 
 import java.util.ArrayList;
@@ -60,6 +61,16 @@ public class BasicChatTest extends BaseTest {
     }
 
     @Test
+    @TestSteps(steps={
+                "Open app",
+				"Click on engagement",
+				"Verify ‘agent is ready for chat’ appears in the top of the page",
+				"Send msg to agent",
+				"Verify msg arrived to agent",
+				"Send msg to visitor",
+				"Verify msg appears in chat"
+    })
+
     public void sendBidirectionalMsgTest() throws Exception {
         getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
 
@@ -70,6 +81,15 @@ public class BasicChatTest extends BaseTest {
     }
 
     @Test
+    @TestSteps(steps={
+                "Open app",
+				"Click on engagement",
+				"Verify ‘agent is ready for chat’ appears in the top of the page",
+				"Send long msg to agent",
+				"Verify long msg arrived to agent",
+				"Send long msg to visitor",
+				"Verify long msg appears in chat"
+    })
     public void sendLongMessagesTest() throws Exception {
         getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
         chatService.handleMsgFlow(service, visitorLongMsg, agentLongMsg, false, "", 2500);
@@ -77,6 +97,15 @@ public class BasicChatTest extends BaseTest {
     }
 
     @Test
+    @TestSteps(steps={
+                "Open app",
+				"Click on engagement",
+				"Verify ‘agent is ready for chat’ appears in the top of the page",
+				"Send msg with special characters msg to agent",
+				"Verify with special characters arrived to agent",
+				"Send with special characters to visitor",
+				"Verify with special characters appears in chat"
+    })
     public void sendMessagesWithSpecialCharactersTest() throws Exception {
         getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
         StringBuilder asciiChars = new StringBuilder();

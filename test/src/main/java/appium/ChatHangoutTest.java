@@ -9,6 +9,7 @@ import com.service.activate.echo_test.InfoActivator;
 import com.service.activate.echo_test.SettingsActivator;
 import com.service.validate.echo_test.ChatService;
 import com.ui.service.drivers.AppiumDrivers;
+import com.util.log.TestSteps;
 import org.junit.*;
 
 import java.util.ArrayList;
@@ -55,6 +56,17 @@ public class ChatHangoutTest extends BaseTest {
     }
 
     @Test
+    @TestSteps(steps={
+                "Open app",
+				"Click on engagement",
+				"Verify ‘agent is ready for chat’ appears in the top of the page",
+				"Send msg to agent",
+				"Verify msg arrived to agent",
+				"Click end session",
+				"Verify chat has ended in agent",
+				"Verify test app left chat page"
+    })
+
     public void endSessionByVisitor() throws Exception {
         getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
         chatService.handleMsgFlow(service, "a", "a", false, "", 2500);
@@ -63,6 +75,16 @@ public class ChatHangoutTest extends BaseTest {
     }
 
     @Test
+    @TestSteps(steps={
+                "Open app",
+				"Click on engagement",
+				"Verify ‘agent is ready for chat’ appears in the top of the page",
+				"Send msg to agent",
+				"Verify msg arrived to agent",
+				"Click terminate chat from agent",
+				"Verify verification alert",
+				"Verify test app left chat"
+    })
     public void endChatByAgent() throws Exception {
         getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
         chatService.handleMsgFlow(service, "a", "a", false, "", 2500);

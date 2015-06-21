@@ -9,6 +9,7 @@ import com.service.activate.echo_test.InfoActivator;
 import com.service.activate.echo_test.SettingsActivator;
 import com.service.validate.echo_test.ChatService;
 import com.ui.service.drivers.AppiumDrivers;
+import com.util.log.TestSteps;
 import org.apache.log4j.Logger;
 import org.junit.*;
 
@@ -59,6 +60,17 @@ public class AgentAvaiabilityTest extends BaseTest {
     }
 
     @Test
+    @TestSteps(steps={
+                "Open app",
+				"Set skill in app",
+				"Click on engagement",
+				"Verify ‘agent is ready for chat’ appears in the top of the page (the online agent)",
+				"Send msg to agent",
+				"Verify msg arrived to the online agent",
+				"Send msg from the online agent and verify in chat the correct agent appears in chat.",
+				"Set availability to offline",
+				"See chat button disabled"
+    })
     public void AgentAvailabilityOnlineOfflineTest() throws Exception {
         chatWithAgentBySkillTest(AgentSkillData.AGENT_B);
         getChatActivity().changeAgentStateWithRange(

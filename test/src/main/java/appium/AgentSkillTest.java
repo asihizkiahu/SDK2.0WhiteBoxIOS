@@ -9,6 +9,7 @@ import com.service.activate.echo_test.InfoActivator;
 import com.service.activate.echo_test.SettingsActivator;
 import com.service.validate.echo_test.ChatService;
 import com.ui.service.drivers.AppiumDrivers;
+import com.util.log.TestSteps;
 import org.apache.log4j.Logger;
 import org.junit.*;
 
@@ -57,6 +58,21 @@ public class AgentSkillTest extends BaseTest {
         ChatActivity.initAgentLoginState(2, agents, repsState, agentStates);
     }
 
+    @TestSteps(steps={
+                "Open app",
+				"Set skill A in app",
+				"Click on engagement",
+				"Verify ‘agent is ready for chat’ appears in the top of the page (the skill A agent)",
+				"Send msg to agent",
+				"Verify msg arrived to the skill A agent",
+				"Send msg from agent and verify in chat the correct agent A appears",
+				"Set skill B in app",
+				"Click on engagement",
+				"Verify ‘agent is ready for chat’ appears in the top of the page (the skill B agent)",
+				"Send msg to agent",
+				"Verify msg arrived to the skill B agent",
+				"Send msg from agent and verify in chat the correct agent B appears"
+    })
     @Test
     public void chatWithAgentBySkillTest() throws Exception {
         chatWithAgentBySkillTest(AgentSkillData.AGENT_A);
