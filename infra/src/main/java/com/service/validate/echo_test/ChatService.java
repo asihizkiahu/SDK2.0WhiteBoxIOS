@@ -36,6 +36,7 @@ public class ChatService {
     private Engagement engagement = new Engagement(true, true);
     private DemoActivator demoActivator = DemoActivator.getInstance();
     private static final Logger logger = Logger.getLogger(ChatService.class);
+    private SysMsgConstants constants = new SysMsgConstants();
 
     private Rep currentAgent;
     private boolean isChatStarted = false;
@@ -119,7 +120,6 @@ public class ChatService {
     }
 
     public void verifyChatSystemMsg(String msg){
-        // scroll up
         Assert.assertTrue(
                 msg + " do not appear on top of chat",
                 isSystemMsgAppearInTop(msg, 5000)
@@ -130,12 +130,13 @@ public class ChatService {
         service.logInAndSetState(repsState, agentStates);
         demoActivator.enterChat();
         currentAgent = agent;
-        verifyChatSystemMsg("Agents are standing by...");
+        verifyChatSystemMsg(constants.AGENTS_STANDING_BY);
     }
 
     public void handleMsgFlow(AgentService service, String visitorMsg, String agentMsg, boolean isCheckSpecificAgent, String repNickName, long timeOut){
         try {
             sendMsgByChatStatus(visitorMsg);
+            verifyChatSystemMsg(constants.AGENT_ARRIVE_SHORTLY);
         } catch (Exception e) {
             logger.warn("Failed to send visitor msg " + e.getMessage());
             return;
@@ -143,6 +144,7 @@ public class ChatService {
         verifyChatMsg(visitorMsg);
         if(!isChatStarted) {
             service.prepareAgentForChat(currentAgent);
+            verifyChatSystemMsg(constants.CHAT_WITH_SYS_MSG + constants.AGENT_NICK_NAME);
             isChatStarted = true;
         }
         handleAgentMsgFlow(service, agentMsg, isCheckSpecificAgent, repNickName, timeOut);
@@ -154,7 +156,7 @@ public class ChatService {
         } catch (ChatApiException | IOException e) {
             logger.warn("Failed to set agent typing " + e.getMessage());
         }
-        verifyChatSystemMsg("Agent is typing...");
+        verifyChatSystemMsg(constants.AGENT_IS_TYPING);
         service.addChatLines(currentAgent, agentMsg);
         try {
             Thread.sleep(timeOut);
@@ -212,6 +214,16 @@ public class ChatService {
 
     public void setIsChatStarted(boolean isChatStarted){
         this.isChatStarted = isChatStarted;
+    }
+
+
+    private class SysMsgConstants{
+
+        private final String CHAT_WITH_SYS_MSG = "You are now chatting with ";
+        private final String AGENT_ARRIVE_SHORTLY = "Thank you for choosing to chat with us.  An agent will be with you shortly.";
+        private final String AGENT_NICK_NAME = "Asi the king of agents";
+        private final String AGENT_IS_TYPING = "Agent is typing...";
+        private final String AGENTS_STANDING_BY = "Agents are standing by...";
     }
 
 }
