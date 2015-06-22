@@ -64,6 +64,7 @@ public class SystemMessagesTest extends BaseTest {
                 "Open app",
 				"Set skill in app",
 				"Click on engagement",
+                "Verify ‘send us msg’ appears in the chat",
 				"Verify ‘agent is ready for chat’ appears in the top of the page",
 				"Send msg to agent",
                 "Verify 'agent will be with you shortly'",

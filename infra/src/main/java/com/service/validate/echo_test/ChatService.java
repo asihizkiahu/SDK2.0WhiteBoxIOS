@@ -129,6 +129,7 @@ public class ChatService {
     public void startAndValidateChat(AgentService service, List<Rep> repsState, List<AgentState> agentStates, Rep agent) throws Exception {
         service.logInAndSetState(repsState, agentStates);
         demoActivator.enterChat();
+        verifyChatMsg(constants.SEND_MSG_TO_OUR_REPS);
         currentAgent = agent;
         verifyChatSystemMsg(constants.AGENTS_STANDING_BY);
     }
@@ -224,6 +225,7 @@ public class ChatService {
         private final String AGENT_NICK_NAME = "Asi the king of agents";
         private final String AGENT_IS_TYPING = "Agent is typing...";
         private final String AGENTS_STANDING_BY = "Agents are standing by...";
+        private final String SEND_MSG_TO_OUR_REPS = "Send a message to our live service reps for immediate help";
     }
 
 }
