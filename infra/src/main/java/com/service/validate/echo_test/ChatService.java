@@ -3,6 +3,7 @@ package com.service.validate.echo_test;
 import com.agent.AgentService;
 import com.liveperson.AgentState;
 import com.liveperson.Rep;
+import com.liveperson.api.ChatApiException;
 import com.pages.Engagement;
 import com.pages.echo_test.Chat;
 import com.pages.echo_test.Info;
@@ -16,6 +17,7 @@ import com.util.genutil.GeneralUtils;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -117,12 +119,10 @@ public class ChatService {
     }
 
     public void verifyChatSystemMsg(String msg){
+        // scroll up
         Assert.assertTrue(
-                "Message Agents are standing by... do not appear in chat",
-                isSystemMsgAppearInTop(
-                        "Agents are standing by...",
-                        5000
-                )
+                msg + " do not appear on top of chat",
+                isSystemMsgAppearInTop(msg, 5000)
         );
     }
 
@@ -149,8 +149,13 @@ public class ChatService {
     }
 
     private void handleAgentMsgFlow(AgentService service, String agentMsg, boolean isCheckSpecificAgent, String repNickName, long timeOut){
+        try {
+            currentAgent.setAgentTyping(true);
+        } catch (ChatApiException | IOException e) {
+            logger.warn("Failed to set agent typing " + e.getMessage());
+        }
+        verifyChatSystemMsg("Agent is typing...");
         service.addChatLines(currentAgent, agentMsg);
-//        verifyChatSystemMsg("Agent Is Typing");
         try {
             Thread.sleep(timeOut);
         } catch (InterruptedException e) {

@@ -1,6 +1,5 @@
 package appium;
 
-import appium.output.AgentSkillTestOutput;
 import com.agent.AgentService;
 import com.config.base.ConfigItemsRouter;
 import com.liveperson.AgentState;

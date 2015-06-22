@@ -1,6 +1,5 @@
 package appium;
 
-import appium.output.AgentAvaiabilityTestOutput;
 import com.agent.AgentService;
 import com.config.base.ConfigItemsRouter;
 import com.liveperson.AgentState;
@@ -75,13 +74,13 @@ public class AgentAvaiabilityTest extends BaseTest {
     })
     public void AgentAvailabilityOnlineOfflineTest() throws Exception {
         chatWithAgentBySkillTest(AgentSkillData.AGENT_B);
-        getChatActivity().changeAgentStateWithRange(
+        getChatActivity().changeAgentState(
                 agentStates,
-                AgentSkillData.AGENT_A.agentLocation,
+                agents,
                 AgentSkillData.AGENT_B.agentLocation,
                 AgentState.Offline
         );
-        chatWithAgentBySkillTest(AgentSkillData.AGENT_A);
+        chatWithAgentBySkillTest(AgentSkillData.AGENT_B);
     }
 
     public void chatWithAgentBySkillTest(AgentSkillData agentSkillData) {

@@ -1,7 +1,5 @@
 package appium;
 
-import appium.output.BasicChatTestOutput;
-import appium.output.SystemMessagesTestOutput;
 import com.agent.AgentService;
 import com.config.base.ConfigItemsRouter;
 import com.liveperson.AgentState;
@@ -70,17 +68,16 @@ public class SystemMessagesTest extends BaseTest {
 				"Send msg to agent",
 				"Verify msg arrived to the agent",
 				"Send msg to visitor",
+                "Verify ‘agent is typing’ appears in the top of the page",
 				"Verify msg arrived to the visitor",
 				"End session",
-				"Set illegal skill",
-				"Verify skill remains the legal skill"
     })
     public void systemMessagesTest() throws Exception {
         // agents are standing by
         getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
 
-        chatService.handleMsgFlow(service, visitorMsg, agentMsg, false, "", 2500);
-        chatService.handleMsgFlow(service, "aaa", "bbb", false, "", 2500);
+        chatService.handleMsgFlow(service, visitorMsg, agentMsg, false, "", 1000);
+//        chatService.handleMsgFlow(service, "aaa", "bbb", false, "", 2500);
 
         getChatActivity().closeChat(service, chatService, agents.get(0));
     }

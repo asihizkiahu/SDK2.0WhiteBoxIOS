@@ -11,7 +11,6 @@ import com.ui.service.drivers.AppiumDrivers;
 import com.ui.service.drivers.SeleniumDrivers;
 import com.util.genutil.GeneralUtils;
 import com.util.log.OutputGenerator;
-import com.util.log.OutputService;
 import com.util.properties.PropertiesHandlerImpl;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
@@ -22,6 +21,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+import com.liveperson.AgentState;
+
 
 import static com.liveperson.AgentState.Online;
 
@@ -98,13 +99,15 @@ public class BaseTest {
 
     protected static class ChatActivity {
 
-        protected void changeAgentState(List<AgentState> agentStates, int agentLocation, AgentState stateToChange) {
+        protected void changeAgentState(List<AgentState> agentStates, List<Rep> agents, int agentLocation, AgentState stateToChange) {
             agentStates.set(agentLocation, stateToChange);
+            agents.get(agentLocation).setAvailability(AgentState.Offline.name());
         }
 
-        protected void changeAgentStateWithRange(List<AgentState> agentStates, int fromLocation, int toLocation, AgentState stateToChange) {
+        protected void changeAgentStateWithRange(List<AgentState> agentStates, List<Rep> agents, int fromLocation, int toLocation, AgentState stateToChange) {
             for(int i = fromLocation; i <= toLocation; i++){
                 agentStates.set(i, stateToChange);
+                agents.get(i).setAvailability("Away");
             }
         }
 

@@ -1,6 +1,5 @@
 package appium;
 
-import appium.output.EcoSanityTestOutput;
 import com.agent.AgentService;
 import com.config.base.ConfigItemsRouter;
 import com.liveperson.AgentState;
