@@ -84,7 +84,7 @@ public class AgentSkillTest extends BaseTest {
         try {
             infoActivator.setSkill("", agentSkillData.skill);
             chatService.startAndValidateChat(service, repsState, agentStates, agents.get(agentSkillData.agentLocation));
-            chatService.handleMsgFlow(service, "aaa", agentSkillData.msg, true, agentSkillData.nickName, 5000);
+            chatService.handleMsgFlow(service, "aaa", agentSkillData.msg, true, agentSkillData.nickName, 5000, false);
             chatService.closeChat(service, agents.get(agentSkillData.agentLocation));
             chatService.verifySkillRemainLegual(SITE_ID + "\\" + agentSkillData.skill);
         } catch (Exception e) {

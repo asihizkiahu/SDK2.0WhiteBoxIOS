@@ -76,8 +76,8 @@ public class BasicChatTest extends BaseTest {
     public void sendBidirectionalMsgTest() throws Exception {
         getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
 
-        chatService.handleMsgFlow(service, visitorMsg, agentMsg, false, "", 2500);
-        chatService.handleMsgFlow(service, "aaa", "bbb", false, "", 2500);
+        chatService.handleMsgFlow(service, visitorMsg, agentMsg, false, "", 2500, false);
+        chatService.handleMsgFlow(service, "aaa", "bbb", false, "", 2500, false);
 
         getChatActivity().closeChat(service, chatService, agents.get(0));
     }
@@ -94,7 +94,7 @@ public class BasicChatTest extends BaseTest {
     })
     public void sendLongMessagesTest() throws Exception {
         getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
-        chatService.handleMsgFlow(service, visitorLongMsg, agentLongMsg, false, "", 2500);
+        chatService.handleMsgFlow(service, visitorLongMsg, agentLongMsg, false, "", 2500, false);
         getChatActivity().closeChat(service, chatService, agents.get(0));
     }
 
@@ -114,7 +114,7 @@ public class BasicChatTest extends BaseTest {
         for(int index = 32; index <= 125; index++){
             asciiChars.append(String.valueOf(Character.toChars(index)));
         }
-        chatService.handleMsgFlow(service, asciiChars.toString(), "1234567890", false, "", 2500);
+        chatService.handleMsgFlow(service, asciiChars.toString(), "1234567890", false, "", 2500, false);
         getChatActivity().closeChat(service, chatService, agents.get(0));
     }
 

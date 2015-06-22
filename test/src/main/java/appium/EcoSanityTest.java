@@ -75,7 +75,7 @@ public class EcoSanityTest extends BaseTest {
 				"Verify skill remains the legal skill"
     })
     public void sanityTest() throws Exception {
-        chatService.handleMsgFlow(service, visitorMsg, agentMsg, false, "", 2500);
+        chatService.handleMsgFlow(service, visitorMsg, agentMsg, false, "", 2500, false);
     }
 
     @After

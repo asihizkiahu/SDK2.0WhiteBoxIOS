@@ -134,7 +134,7 @@ public class ChatService {
         verifyChatSystemMsg(constants.AGENTS_STANDING_BY);
     }
 
-    public void handleMsgFlow(AgentService service, String visitorMsg, String agentMsg, boolean isCheckSpecificAgent, String repNickName, long timeOut){
+    public void handleMsgFlow(AgentService service, String visitorMsg, String agentMsg, boolean isCheckSpecificAgent, String repNickName, long timeOut, boolean isAgentDelayedResp){
         try {
             sendMsgByChatStatus(visitorMsg);
             verifyChatSystemMsg(constants.AGENT_ARRIVE_SHORTLY);
@@ -148,21 +148,30 @@ public class ChatService {
             verifyChatSystemMsg(constants.CHAT_WITH_SYS_MSG + constants.AGENT_NICK_NAME);
             isChatStarted = true;
         }
-        handleAgentMsgFlow(service, agentMsg, isCheckSpecificAgent, repNickName, timeOut);
+        handleAgentMsgFlow(service, agentMsg, isCheckSpecificAgent, repNickName, timeOut, isAgentDelayedResp);
     }
 
-    private void handleAgentMsgFlow(AgentService service, String agentMsg, boolean isCheckSpecificAgent, String repNickName, long timeOut){
+    private void handleAgentMsgFlow(AgentService service, String agentMsg, boolean isCheckSpecificAgent, String repNickName, long timeOut, boolean isAgentDelayedResp){
         try {
             currentAgent.setAgentTyping(true);
+            verifyChatSystemMsg(constants.AGENT_IS_TYPING);
         } catch (ChatApiException | IOException e) {
             logger.warn("Failed to set agent typing " + e.getMessage());
         }
-        verifyChatSystemMsg(constants.AGENT_IS_TYPING);
         service.addChatLines(currentAgent, agentMsg);
         try {
             Thread.sleep(timeOut);
         } catch (InterruptedException e) {
             logger.warn("Failed to wait " + e.getMessage());
+        }
+        if(isAgentDelayedResp){
+            try {
+                logger.info("Waiting 3 minutes for agent delayed response system message");
+                Thread.sleep(200000);
+                verifyChatMsg(constants.DELAYED_RESP);
+            } catch (InterruptedException e) {
+                logger.warn("Failed to wait " + e.getMessage());
+            }
         }
         verifyAgentMsg(agentMsg, isCheckSpecificAgent, repNickName);
         Assert.assertTrue("Chat last line " + agentMsg + "is not as expected ",
@@ -226,6 +235,7 @@ public class ChatService {
         private final String AGENT_IS_TYPING = "Agent is typing...";
         private final String AGENTS_STANDING_BY = "Agents are standing by...";
         private final String SEND_MSG_TO_OUR_REPS = "Send a message to our live service reps for immediate help";
+        private final String DELAYED_RESP = "I'm sorry for the delay. I'll be right with you.";
     }
 
 }

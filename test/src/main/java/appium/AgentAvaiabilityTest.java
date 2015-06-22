@@ -86,7 +86,7 @@ public class AgentAvaiabilityTest extends BaseTest {
     public void chatWithAgentBySkillTest(AgentSkillData agentSkillData) {
         try {
             chatService.startAndValidateChat(service, repsState, agentStates, agents.get(agentSkillData.agentLocation));
-            chatService.handleMsgFlow(service, "aaa", agentSkillData.msg, true, agentSkillData.nickName, 5000);
+            chatService.handleMsgFlow(service, "aaa", agentSkillData.msg, true, agentSkillData.nickName, 5000, false);
             if(agentSkillData == AgentSkillData.AGENT_B) {
                 chatService.closeChat(service, agents.get(agentSkillData.agentLocation));
             }else{

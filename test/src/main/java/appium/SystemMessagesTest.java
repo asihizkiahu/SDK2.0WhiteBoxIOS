@@ -73,13 +73,15 @@ public class SystemMessagesTest extends BaseTest {
 				"Send msg to visitor",
                 "Verify ‘agent is typing’ appears in the top of the page",
 				"Verify msg arrived to the visitor",
+                "Wait 3 minutes",
+                "Verify ‘I'm sorry for the delay. ’ appears in chat",
 				"End session",
     })
     public void systemMessagesTest() throws Exception {
         // agents are standing by
         getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
 
-        chatService.handleMsgFlow(service, visitorMsg, agentMsg, false, "", 1000);
+        chatService.handleMsgFlow(service, visitorMsg, agentMsg, false, "", 1000, true);
 //        chatService.handleMsgFlow(service, "aaa", "bbb", false, "", 2500);
 
         getChatActivity().closeChat(service, chatService, agents.get(0));

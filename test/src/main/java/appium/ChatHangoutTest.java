@@ -71,7 +71,7 @@ public class ChatHangoutTest extends BaseTest {
 
     public void endSessionByVisitor() throws Exception {
         getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
-        chatService.handleMsgFlow(service, "a", "a", false, "", 2500);
+        chatService.handleMsgFlow(service, "a", "a", false, "", 2500, false);
         chatService.ensSession(service, agents.get(0));
         chatService.verifyIsInEngagementPage();
     }
@@ -89,7 +89,7 @@ public class ChatHangoutTest extends BaseTest {
     })
     public void endChatByAgent() throws Exception {
         getChatActivity().startChat(service, chatService, repsState, agentStates, agents.get(0));
-        chatService.handleMsgFlow(service, "a", "a", false, "", 2500);
+        chatService.handleMsgFlow(service, "a", "a", false, "", 2500, false);
         service.endChat(agents.get(0));
         chatService.setIsChatStarted(false);
         chatService.dismissSession();
