@@ -90,7 +90,7 @@ public class AgentAvaiabilityTest extends BaseTest {
             if(agentSkillData == AgentSkillData.AGENT_B) {
                 chatService.closeChat(service, agents.get(agentSkillData.agentLocation));
             }else{
-                Assert.assertFalse("", chatService.isSystemMsgAppearInTop("Agents are standing by...", 5000));
+                Assert.assertFalse("", chatService.isMsgAppears("Agents are standing by...", 5000, ChatService.MessageType.SYSTEM));
 
             }
         } catch (Exception e) {
