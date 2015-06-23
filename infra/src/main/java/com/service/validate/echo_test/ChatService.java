@@ -37,6 +37,9 @@ public class ChatService {
     private DemoActivator demoActivator = DemoActivator.getInstance();
     private static final Logger logger = Logger.getLogger(ChatService.class);
     private SysMsgConstants constants = new SysMsgConstants();
+    private List<Rep> repsState;
+    private List<AgentState> agentStates;
+    private AgentService service;
 
     private Rep currentAgent;
     private boolean isChatStarted = false;
@@ -113,6 +116,7 @@ public class ChatService {
     }
 
     public void startAndValidateChat(AgentService service, List<Rep> repsState, List<AgentState> agentStates, Rep agent) {
+        initParams(service, repsState, agentStates);
         service.logInAndSetState(repsState, agentStates);
         try {
             demoActivator.enterChat();
@@ -144,6 +148,9 @@ public class ChatService {
             isChatStarted = true;
         }
         handleAgentMsgFlow(service, agentMsg, isCheckSpecificAgent, repNickName, timeOut, isVerifySysMsg);
+        if(isVerifySysMsg){
+            verifyAgentDelayedAutoResp(visitorMsg);
+        }
     }
 
     private void handleAgentMsgFlow(AgentService service, String agentMsg, boolean isCheckSpecificAgent, String repNickName, long timeOut, boolean isVerifySysMsg){
@@ -161,16 +168,31 @@ public class ChatService {
         } catch (InterruptedException e) {
             logger.warn("Failed to wait " + e.getMessage());
         }
-        if(isVerifySysMsg){
-            try {
-                logger.info("Waiting 3 minutes for agent delayed response system message");
-                Thread.sleep(200000);
-                verifyChatMsg(constants.DELAYED_RESP, MessageType.SYSTEM);
-            } catch (InterruptedException e) {
-                logger.warn("Failed to wait " + e.getMessage());
-            }
-        }
         assertAgent(service, agentMsg, isCheckSpecificAgent, repNickName);
+    }
+
+    private void verifyAgentDelayedAutoResp(String visitorMsg){
+        try {
+            closeChat(service, currentAgent);
+            try {
+                startAndValidateChat(service, repsState, agentStates, currentAgent);
+                sendMsgByChatStatus(visitorMsg);
+                if (!isChatStarted) {
+                    service.prepareAgentForChat(currentAgent);
+                }
+            } catch (Exception e) {
+                GeneralUtils.handleError("Can't enter chat", e);
+            }
+            logger.info("Waiting 3 minutes for agent delayed response system message");
+            try {
+                Thread.sleep(200000);
+            } catch (InterruptedException e) {
+                GeneralUtils.handleError("Can't wait 3 min", e);
+            }
+            verifyChatMsg(constants.DELAYED_RESP, MessageType.SYSTEM);
+        }catch (Exception e) {
+            GeneralUtils.handleError("Can't close chat", e);
+        }
     }
 
     private void assertAgent(AgentService service, String agentMsg, boolean isCheckSpecificAgent, String repNickName){
@@ -222,6 +244,12 @@ public class ChatService {
 
     public void setIsChatStarted(boolean isChatStarted){
         this.isChatStarted = isChatStarted;
+    }
+
+    private void initParams(AgentService service, List<Rep> repsState, List<AgentState> agentStates){
+        this.service = service;
+        this.repsState = repsState;
+        this.agentStates = agentStates;
     }
 
     public enum MessageType{
